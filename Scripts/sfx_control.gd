@@ -31,10 +31,8 @@ func _on_sfx_volume_changed(value: float):
 
 func _save_settings():
 	var config = ConfigFile.new()
-	# Сохраняем значения ползунков (от 0.0 до 1.0)
-
+	config.load("user://settings.cfg")
 	config.set_value("audio", "sfx_volume", sfx_slider.value)
-	# Сохраняем файл в пользовательскую папку
 	config.save("user://settings.cfg")
 
 func _load_settings():

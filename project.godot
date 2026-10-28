@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="gamejama"
+run/main_scene="uid://dncuqehm1uk0r"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

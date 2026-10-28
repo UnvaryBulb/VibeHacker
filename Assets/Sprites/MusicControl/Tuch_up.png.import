@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cybd5r4glqbd4"
-path="res://.godot/imported/Sound_on.png-a69c423d2d615401e66acedcd02d20d6.ctex"
+uid="uid://c6bsgaeicdjso"
+path="res://.godot/imported/Tuch_up.png-698555e2d16e37e57f6bd8dd6fc8b105.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Sound_on.png"
-dest_files=["res://.godot/imported/Sound_on.png-a69c423d2d615401e66acedcd02d20d6.ctex"]
+source_file="res://Assets/Sprites/MusicControl/Tuch_up.png"
+dest_files=["res://.godot/imported/Tuch_up.png-698555e2d16e37e57f6bd8dd6fc8b105.ctex"]
 
 [params]
 
