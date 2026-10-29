@@ -171,9 +171,11 @@ script = ExtResource("3_con2f")
 
 [node name="SFXbutton_focus" type="AudioStreamPlayer2D" parent="." unique_id=429947470]
 stream = SubResource("AudioStreamOggVorbis_g3eks")
+bus = &"SFX"
 
 [node name="SFXbutton_press" type="AudioStreamPlayer2D" parent="." unique_id=790838777]
 stream = ExtResource("6_g3eks")
+bus = &"SFX"
 
 [node name="SfxIcon" type="Sprite2D" parent="." unique_id=71473972]
 texture_filter = 1
