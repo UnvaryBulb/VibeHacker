@@ -11,6 +11,7 @@ func _ready():
 	start_first_mission()
 
 func start_first_mission():
+	
 	await hacker_type("Связь установлена. Я получил доступ к камере #1.")
 	await hacker_type("Скидываю скриншот. Найди на нём 4-значный код.")
 	
@@ -28,7 +29,7 @@ func hacker_type(text: String, speed: float = 0.03):
 	is_typing = true
 	input_field.editable = false  # ← БЛОКИРУЕМ ПОЛЕ ВВОДА
 	
-	logs.append_text("[color=yellow]> ХАКЕР:[/color] ")
+	logs.append_text("[color=yellow]> ХАЦКЕР:[/color] ")
 	for char in text:
 		logs.append_text(char)
 

@@ -8,21 +8,17 @@ shader = ExtResource("2_wrm1d")
 shader_parameter/scanline_intensity = 0.3
 shader_parameter/scanline_width = 3.0
 shader_parameter/curvature_amount = 0.1830000086925
-shader_parameter/chromatic_aberration = 0.0010000000475
+shader_parameter/chromatic_aberration = 0.0030000001425
 shader_parameter/vignette_intensity = 0.6
 shader_parameter/noise_intensity = 0.05
 shader_parameter/flicker_intensity = 0.03
-shader_parameter/brightness = 0.8370000160075
-shader_parameter/contrast = 1.2710000366225
+shader_parameter/brightness = 1.0830000276925
+shader_parameter/contrast = 1.0990000284525
 
 [node name="Node2D" type="Node2D" unique_id=318810494]
 
-[node name="Control" parent="." unique_id=953991987 instance=ExtResource("1_qxrlw")]
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=2048038405]
-position = Vector2(574, 324)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2003218008]
+layer = 0
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=742958902]
 material = SubResource("ShaderMaterial_cnwd3")
@@ -31,3 +27,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Control" parent="." unique_id=953991987 instance=ExtResource("1_qxrlw")]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2048038405]
+position = Vector2(576, 328)
