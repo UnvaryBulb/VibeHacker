@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://0cja7u1c2kpr"]
+
+[ext_resource type="FontFile" uid="uid://digjdykgqgfow" path="res://Assets/PressStart2P-Regular.ttf" id="1_0dftn"]
+[ext_resource type="Script" uid="uid://d1cy671e2o504" path="res://Scripts/TerminalController.gd" id="1_xws0m"]
+
+[node name="Control" type="Control" unique_id=953991987]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xws0m")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=225429652]
+layout_mode = 0
+offset_right = 1155.0
+offset_bottom = 650.0
+color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+
+[node name="top" type="RichTextLabel" parent="." unique_id=160444618]
+texture_filter = 1
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 267.0
+theme_override_colors/default_color = Color(1, 0.84313726, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_0dftn")
+theme_override_font_sizes/normal_font_size = 9
+text = "                                        unvary@Unvary-pc
+                       AJE              ----------------
+                     8JJJJ              OS 󰁔 Arch Linux x86_64
+                    JJJJJ               Host 󰁔 B760M Pro RS/D4
+               BJJJJJJJJJJJB            Kernel 󰁔 Linux 7.2.11-arch1-1
+            QJJJ. JJJB2JJJ :FJ          Uptime 󰁔 5 hours, 37 mins
+           JJJ,  2JJJ  JJJ;   .         Packages 󰁔 22 (flatpak), 921 (pacman)
+         JJH    JJJ   JJJw              Shell 󰁔 fish 4.9.3
+         EJJ    JJJ,   JJJH             Display (AF24H1) 󰁔 1920x1080 in 24\", 144 Hz [External]
+         JJ@   JJJ6W19EJJJJGJJJJJJJJJ*  Window Manager 󰁔 Hyprland 0.56.2 (Wayland)
+  TEJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJD     Terminal 󰁔 kitty 0.49.2
+       qJJJJJJJJ1bli;. JJJ8   ,         CPU 󰁔 13th Gen Intel(R) Core(TM) i3-13100F (8) @ 4.50 GHz
+        JJJ CJJ.       JJJI   J8        GPU 󰁔 NVIDIA Geforce RTX 3050 [Discrete]
+        OJJ6JJ#        8JJJ  EJJ        Memory 󰁔 9.79 GiB / 31.17 GiB (31%)
+         AJJJE         IJJJ:HJJ         
+          8JJJ0         JJJJJJ                                  
+          J.IJJJJIq   6JJJJJC                                   
+         J    :HJJJJJJJJJJJ5          
+        8                HJ          
+                          8#          "
+scroll_active = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=119682658]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 300.0
+offset_right = 1149.0
+offset_bottom = 644.0
+theme_override_constants/separation = 10
+
+[node name="logs" type="RichTextLabel" parent="VBoxContainer" unique_id=703003062]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(1, 0.84313726, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_0dftn")
+bbcode_enabled = true
+scroll_following = true
+scroll_following_visible_characters = true
+vertical_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1355148060]
+layout_mode = 2
+
+[node name="prefix" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1206082292]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_fonts/font = ExtResource("1_0dftn")
+text = ">"
+
+[node name="enter" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=999112691]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_fonts/font = ExtResource("1_0dftn")
+flat = true
+
+[connection signal="text_submitted" from="VBoxContainer/HBoxContainer/enter" to="." method="_on_enter_text_submitted"]
