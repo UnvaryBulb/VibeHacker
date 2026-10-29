@@ -1,7 +1,20 @@
 [gd_scene format=3 uid="uid://0cja7u1c2kpr"]
 
 [ext_resource type="FontFile" uid="uid://digjdykgqgfow" path="res://Assets/PressStart2P-Regular.ttf" id="1_0dftn"]
+[ext_resource type="Shader" uid="uid://d1hl5qtxtdk2a" path="res://Shaders/CRTShader.gdshader" id="1_rwk22"]
 [ext_resource type="Script" uid="uid://d1cy671e2o504" path="res://Scripts/TerminalController.gd" id="1_xws0m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2rnly"]
+shader = ExtResource("1_rwk22")
+shader_parameter/scanline_intensity = 0.3
+shader_parameter/scanline_width = 3.0
+shader_parameter/curvature_amount = 0.1
+shader_parameter/chromatic_aberration = 0.002
+shader_parameter/vignette_intensity = 0.5
+shader_parameter/noise_intensity = 0.05
+shader_parameter/flicker_intensity = 0.03
+shader_parameter/brightness = 0.5
+shader_parameter/contrast = 0.7310000109725
 
 [node name="Control" type="Control" unique_id=953991987]
 layout_mode = 3
@@ -12,15 +25,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xws0m")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=225429652]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=690197226]
+material = SubResource("ShaderMaterial_2rnly")
 layout_mode = 0
-offset_right = 1155.0
-offset_bottom = 650.0
-color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+offset_right = 1150.0
+offset_bottom = 647.0
 
 [node name="top" type="RichTextLabel" parent="." unique_id=160444618]
 texture_filter = 1
 layout_mode = 0
+offset_top = 18.0
 offset_right = 1153.0
 offset_bottom = 267.0
 theme_override_colors/default_color = Color(1, 0.84313726, 0, 1)
@@ -50,16 +64,17 @@ scroll_active = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=119682658]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 300.0
-offset_right = 1149.0
-offset_bottom = 644.0
-theme_override_constants/separation = 10
+offset_left = 51.0
+offset_top = 235.0
+offset_right = 1136.0
+offset_bottom = 615.0
+theme_override_constants/separation = 5
 
 [node name="logs" type="RichTextLabel" parent="VBoxContainer" unique_id=703003062]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/default_color = Color(1, 0.84313726, 0, 1)
+theme_override_constants/line_separation = 20
 theme_override_fonts/normal_font = ExtResource("1_0dftn")
 bbcode_enabled = true
 scroll_following = true
