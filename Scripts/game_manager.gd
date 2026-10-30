@@ -66,7 +66,12 @@ func load_terminal() -> void:
 
 func load_level(camera_num: int) -> void:
 	phase = "hex"
-	get_tree().change_scene_to_file(_get_field(camera_num, CameraField.PLATFORMER_SCENE))
+	var scene_path := _get_field(camera_num, CameraField.PLATFORMER_SCENE)
+	# Уровни 2 и 3 ещё не созданы — не роняем игру, остаёмся в терминале.
+	if not ResourceLoader.exists(scene_path):
+		push_warning("GameManager: сцена уровня '%s' не найдена (камера %d)." % [scene_path, camera_num])
+		return
+	get_tree().change_scene_to_file(scene_path)
 
 func next_camera() -> void:
 	current_camera += 1

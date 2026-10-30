@@ -26,6 +26,9 @@ const STEP_PITCH_RANGE := Vector2(0.9, 1.1)
 # === ANIMATIONS ===
 enum PlayerAnimation { IDLE, WALK, RUN }
 
+## Имена анимаций в AnimatedSprite2D (порядок совпадает с enum).
+const ANIMATION_NAMES: Array[StringName] = [&"idle", &"walk", &"run"]
+
 const SPRITE_SCALE := Vector2(2, 2)
 const STRETCH_UP := Vector2(1.8, 2.2)
 const STRETCH_FALL := Vector2(2.1, 1.9)
@@ -44,7 +47,10 @@ var _was_on_floor := true
 var _step_timer := 0.0
 
 func _ready() -> void:
-	randomize()  # Инициализируем генератор случайных чисел
+	# В Godot 4 генератор случайных чисел инициализируется автоматически,
+	# randomize() удалён из API.
+	if not camera:
+		push_warning("Player: Camera2D не найден во вьюпорте — тряска экрана будет пропущена.")
 
 func _physics_process(delta: float) -> void:
 	_update_jump_timers(delta)
@@ -77,7 +83,8 @@ func _apply_gravity_and_landing() -> void:
 		# 🎵 Звук приземления — только если реально упали
 		if velocity.y > LAND_THRESHOLD:
 			land_sound.play()
-			camera.shake(2)
+			if camera:
+				camera.shake(2)
 
 # === ПРЫЖОК ===
 func _try_jump() -> void:
@@ -88,7 +95,8 @@ func _try_jump() -> void:
 	_coyote_timer = 0
 	_was_on_floor = false
 	jump_sound.play()  # 🎵 Звук прыжка
-	camera.shake(3)
+	if camera:
+		camera.shake(3)
 
 # === ГОРИЗОНТАЛЬНОЕ ДВИЖЕНИЕ + Variable Jump Height ===
 func _apply_horizontal_movement(delta: float) -> void:

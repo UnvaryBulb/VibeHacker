@@ -10,7 +10,9 @@ const DESPAWN_DELAY := 0.5
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var particles: GPUParticles2D = $GPUParticles2D
-@onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
+# Звук необязателен: узла может не быть в сцене (в lvlA1.tscn он переопределён) —
+# тогда просто пропускаем воспроизведение вместо падения.
+@onready var sound: AudioStreamPlayer2D = get_node_or_null("AudioStreamPlayer2D")
 
 @export var hex_code: String = "A1"  # Задаётся в Inspector
 

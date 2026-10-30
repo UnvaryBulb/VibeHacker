@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://1n5s1ydpn6oa" path="res://Assets/Sprites/Main_menu/QUIT_down.png" id="6_5ti5v"]
 [ext_resource type="Texture2D" uid="uid://26qjguh8wbsa" path="res://Assets/Sprites/MusicControl/Tuch_down.png" id="8_8ph6h"]
 [ext_resource type="Texture2D" uid="uid://bjwqewdn8jmmu" path="res://Assets/Sprites/MusicControl/MusicControl_null.png" id="9_5ti5v"]
+[ext_resource type="AudioStream" uid="uid://4j3226uie4hr" path="res://Assets/SFX/button.ogg" id="10_btn1"]
 [ext_resource type="Texture2D" uid="uid://doreyoeeffrp" path="res://Assets/Sprites/MusicControl/MusicControl_full.png" id="10_1by5w"]
 [ext_resource type="Texture2D" uid="uid://dofuplq5yaktw" path="res://Assets/Sprites/MusicControl/SFX_icon.png" id="13_8ph6h"]
 [ext_resource type="Texture2D" uid="uid://c6lj6x2ybqt46" path="res://Assets/Sprites/MusicControl/Music_icon_.png" id="14_5ti5v"]
@@ -181,9 +182,11 @@ value = 1.0
 script = ExtResource("3_con2f")
 
 [node name="SFXbutton_focus" type="AudioStreamPlayer2D" parent="." unique_id=429947470]
+stream = ExtResource("10_btn1")
 bus = &"SFX"
 
 [node name="SFXbutton_press" type="AudioStreamPlayer2D" parent="." unique_id=790838777]
+stream = ExtResource("10_btn1")
 bus = &"SFX"
 
 [node name="SfxIcon" type="Sprite2D" parent="." unique_id=71473972]

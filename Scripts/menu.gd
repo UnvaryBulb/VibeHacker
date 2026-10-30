@@ -8,8 +8,8 @@ const WAVE_BUTTON_NAMES := ["play", "quit"]
 
 var _wave_tweens: Dictionary = {}
 
-@onready var button_focus_sfx: AudioStreamPlayer = $SFXbutton_focus
-@onready var button_press_sfx: AudioStreamPlayer = $SFXbutton_press
+@onready var button_focus_sfx: AudioStreamPlayer2D = $SFXbutton_focus
+@onready var button_press_sfx: AudioStreamPlayer2D = $SFXbutton_press
 
 func _ready() -> void:
 	for name in WAVE_BUTTON_NAMES:
