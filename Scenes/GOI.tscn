@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cf488e30jxouw" path="res://Assets/Sprites/Atlas_Player.png" id="1_6jniy"]
 [ext_resource type="Script" uid="uid://crs0wo4cg3skj" path="res://Scripts/goi.gd" id="1_hvclg"]
+[ext_resource type="Script" uid="uid://dh0w20jong11v" path="res://Scripts/camera_2d.gd" id="3_hvclg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cnwd3"]
 radius = 9.0
@@ -104,8 +105,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_wd1xl")
 }],
 "loop": 2,
-"name": &"default",
-"speed": 5.0
+"name": &"idle",
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -133,8 +134,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_wskxn")
 }],
 "loop": 1,
-"name": &"running",
-"speed": 5.0
+"name": &"run",
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -168,11 +169,12 @@ animations = [{
 "texture": SubResource("AtlasTexture_qxvs8")
 }],
 "loop": 1,
-"name": &"walking",
-"speed": 5.0
+"name": &"walk",
+"speed": 8.0
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=156222911]
+disable_mode = 2
 script = ExtResource("1_hvclg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=348609637]
@@ -181,12 +183,14 @@ shape = SubResource("CapsuleShape2D_cnwd3")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1295219190]
 texture_filter = 1
 texture_repeat = 1
-scale = Vector2(2.1484375, 2.1484375)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_cnwd3")
-animation = &"walking"
+animation = &"walk"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1624806077]
 position = Vector2(0, -54)
 zoom = Vector2(3, 3)
 process_callback = 0
 position_smoothing_enabled = true
+script = ExtResource("3_hvclg")
+shake_decay = 20
