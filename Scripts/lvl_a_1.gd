@@ -1,11 +1,22 @@
 extends Node2D
 
+@onready var key = $key  # Ссылка на ключик в уровне
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _ready():
+	if key:
+		key.key_collected.connect(_on_key_collected)
 
+const HexPopupScene: PackedScene = preload("res://Scenes/HexPopup.tscn")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_key_collected(hex_code: String) -> void:
+	# Показываем красивую расшифровку
+	var popup := HexPopupScene.instantiate()
+	add_child(popup)
+	popup.show_code(hex_code)
+	
+	# Ждём пока игрок посмотрит и попап исчезнет
+	await popup.finished
+	popup.queue_free()
+	
+	# Только ТЕПЕРЬ возвращаемся в терминал
+	GameManager.on_key_collected(hex_code)

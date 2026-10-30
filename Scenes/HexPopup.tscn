@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://cceyagjf250v1"]
+
+[ext_resource type="Script" uid="uid://bijtaw1vxqad8" path="res://Scripts/hex_popup.gd" id="1_fdw6w"]
+
+[node name="HexPopup" type="CanvasLayer" unique_id=1959296605]
+layer = 20
+script = ExtResource("1_fdw6w")
+
+[node name="UI" type="Control" parent="." unique_id=1528787776]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BG" type="ColorRect" parent="UI" unique_id=1781324466]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.003921569)
+
+[node name="Center" type="CenterContainer" parent="UI" unique_id=2041895876]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" type="VBoxContainer" parent="UI/Center" unique_id=1796426233]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="UI/Center/Box" unique_id=837426387]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2621223, 0.88035375, 0.10498666, 1)
+theme_override_font_sizes/font_size = 24
+
+[node name="Code" type="Label" parent="UI/Center/Box" unique_id=1003761729]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_font_sizes/font_size = 96
+
+[node name="Hint" type="Label" parent="UI/Center/Box" unique_id=1529515894]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.31801978, 0.3180198, 0.31801972, 1)
+theme_override_font_sizes/font_size = 14

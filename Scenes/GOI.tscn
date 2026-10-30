@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cf488e30jxouw" path="res://Assets/Sprites/Atlas_Player.png" id="1_6jniy"]
 [ext_resource type="Script" uid="uid://crs0wo4cg3skj" path="res://Scripts/goi.gd" id="1_hvclg"]
 [ext_resource type="Script" uid="uid://dh0w20jong11v" path="res://Scripts/camera_2d.gd" id="3_hvclg"]
+[ext_resource type="AudioStream" uid="uid://i2a360ch0bkj" path="res://Assets/SFX/jump.ogg" id="4_uyfgc"]
+[ext_resource type="AudioStream" uid="uid://dqst8dg7fbgv1" path="res://Assets/SFX/step.ogg" id="5_us08g"]
+[ext_resource type="AudioStream" uid="uid://m4fv132kkfrt" path="res://Assets/SFX/fall.ogg" id="6_wkr0a"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cnwd3"]
 radius = 9.0
@@ -195,3 +198,16 @@ position_smoothing_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("3_hvclg")
 shake_decay = 20
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="." unique_id=1645539290]
+stream = ExtResource("4_uyfgc")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="StepSound" type="AudioStreamPlayer2D" parent="." unique_id=1587515201]
+stream = ExtResource("5_us08g")
+bus = &"SFX"
+
+[node name="LandSound" type="AudioStreamPlayer2D" parent="." unique_id=301771890]
+stream = ExtResource("6_wkr0a")
+bus = &"SFX"

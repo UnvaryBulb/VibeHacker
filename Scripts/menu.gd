@@ -25,8 +25,9 @@ func _play_wave(btn: Button) -> void:  # Анимация кнопок
 	wave_tweens[btn] = tw
 
 func _on_play_pressed() -> void:
-	
-	get_tree().change_scene_to_file("res://Scenes/game.tscn")
+
+	$play.disabled = true  # ✅ от двойного клика
+	GameManager.start_game()
 
 func _on_quit_pressed() -> void:
 	
