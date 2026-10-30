@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://0cja7u1c2kpr"]
 
 [ext_resource type="FontFile" uid="uid://digjdykgqgfow" path="res://Assets/PressStart2P-Regular.ttf" id="1_0dftn"]
-[ext_resource type="Script" uid="uid://d1cy671e2o504" path="res://Scripts/TerminalController.gd" id="1_xws0m"]
+[ext_resource type="Script" uid="uid://d1cy671e2o504" path="res://Scripts/terminal_controller.gd" id="1_xws0m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2rnly"]
 

@@ -1,50 +1,29 @@
 extends HSlider
+## Ползунок громкости эффектов (шина "SFX") с сохранением в настройки.
 
-# Ссылаемся на ползунки
-@onready var sfx_slider = $'.'
+const SETTINGS_PATH := "user://settings.cfg"
+const SETTINGS_SECTION := "audio"
+const SETTINGS_KEY := "sfx_volume"
 
-# Индексы шин (чтобы не искать их каждый раз)
+var _bus_index: int = -1
 
-var sfx_bus_index: int
-
-func _ready():
-	# Получаем индексы наших шин
-
-	sfx_bus_index = AudioServer.get_bus_index("SFX")
-	
-	# Подключаем сигналы изменения ползунков
-
-	sfx_slider.value_changed.connect(_on_sfx_volume_changed)
-	
-	# Загружаем сохраненные настройки (если они есть)
+func _ready() -> void:
+	_bus_index = AudioServer.get_bus_index("SFX")
+	value_changed.connect(_on_volume_changed)
 	_load_settings()
 
-# Функция для Музыки
-
-# Функция для Эффектов
-func _on_sfx_volume_changed(value: float):
-	var db = linear_to_db(value)
-	AudioServer.set_bus_volume_db(sfx_bus_index, db)
+func _on_volume_changed(value: float) -> void:
+	# Ползунок даёт 0.0..1.0, Godot требует децибелы: linear_to_db.
+	AudioServer.set_bus_volume_db(_bus_index, linear_to_db(value))
 	_save_settings()
 
-# --- СОХРАНЕНИЕ И ЗАГРУЗКА (Чтобы настройки не сбрасывались) ---
+func _save_settings() -> void:
+	var config := ConfigFile.new()
+	config.load(SETTINGS_PATH)  # ок, если файла ещё нет
+	config.set_value(SETTINGS_SECTION, SETTINGS_KEY, value)
+	config.save(SETTINGS_PATH)
 
-func _save_settings():
-	var config = ConfigFile.new()
-	config.load("user://settings.cfg")
-	config.set_value("audio", "sfx_volume", sfx_slider.value)
-	config.save("user://settings.cfg")
-
-func _load_settings():
-	var config = ConfigFile.new()
-	var err = config.load("user://settings.cfg")
-	
-	if err == OK:
-		# Если файл есть, применяем значения
-		var sfx_vol = config.get_value("audio", "sfx_volume", 1.0)
-		
-		# Обновляем ползунки
-		sfx_slider.value = sfx_vol
-		
-		# Применяем громкость к шинам
-		_on_sfx_volume_changed(sfx_vol)
+func _load_settings() -> void:
+	var config := ConfigFile.new()
+	if config.load(SETTINGS_PATH) == OK:
+		value = config.get_value(SETTINGS_SECTION, SETTINGS_KEY, 1.0)
