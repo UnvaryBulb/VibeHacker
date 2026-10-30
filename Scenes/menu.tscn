@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bjwqewdn8jmmu" path="res://Assets/Sprites/MusicControl/MusicControl_null.png" id="9_5ti5v"]
 [ext_resource type="Texture2D" uid="uid://doreyoeeffrp" path="res://Assets/Sprites/MusicControl/MusicControl_full.png" id="10_1by5w"]
 [ext_resource type="Texture2D" uid="uid://dofuplq5yaktw" path="res://Assets/Sprites/MusicControl/SFX_icon.png" id="13_8ph6h"]
-[ext_resource type="Texture2D" uid="uid://bq67j2gdui2kc" path="res://Assets/Sprites/MusicControl/Music_icon.png" id="14_5ti5v"]
+[ext_resource type="Texture2D" uid="uid://c6lj6x2ybqt46" path="res://Assets/Sprites/MusicControl/Music_icon_.png" id="14_5ti5v"]
 [ext_resource type="Shader" uid="uid://8o483krwo7c8" path="res://Shaders/ScreenCRT.gdshader" id="14_8ph6h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ti5v"]
