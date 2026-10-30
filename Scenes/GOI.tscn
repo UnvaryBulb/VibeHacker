@@ -188,9 +188,10 @@ sprite_frames = SubResource("SpriteFrames_cnwd3")
 animation = &"walk"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1624806077]
-position = Vector2(0, -54)
-zoom = Vector2(3, 3)
+position = Vector2(-1, -64)
+zoom = Vector2(2, 2)
 process_callback = 0
 position_smoothing_enabled = true
+drag_vertical_enabled = true
 script = ExtResource("3_hvclg")
 shake_decay = 20
