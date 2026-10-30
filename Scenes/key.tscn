@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://b2ohht1dkwvgh"]
+
+[ext_resource type="Script" uid="uid://bc4pn2wvr7nfp" path="res://Scripts/key.gd" id="1_udxw8"]
+[ext_resource type="Texture2D" uid="uid://difnonkug4pty" path="res://Assets/Sprites/atlas_UPDATE.png" id="2_brn0f"]
+[ext_resource type="Texture2D" uid="uid://c6bsgaeicdjso" path="res://Assets/Sprites/MusicControl/Tuch_up.png" id="3_brn0f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_prcul"]
+size = Vector2(16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnwd3"]
+atlas = ExtResource("2_brn0f")
+region = Rect2(102.98855, 21.988544, 14.040321, 5.021574)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lc1k7"]
+atlas = ExtResource("3_brn0f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_58hov"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.29999998
+scale_max = 0.29999998
+color = Color(1, 0.8392157, 0, 1)
+anim_speed_max = 80.0
+
+[node name="key" type="Area2D" unique_id=1259834109]
+script = ExtResource("1_udxw8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1211951912]
+shape = SubResource("RectangleShape2D_prcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=395751238]
+texture = SubResource("AtlasTexture_cnwd3")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1706877146]
+emitting = false
+amount = 20
+texture = SubResource("AtlasTexture_lc1k7")
+lifetime = 0.8
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_58hov")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=626536827]

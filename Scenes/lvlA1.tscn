@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://chlncmtysf0og" path="res://Scripts/lvl_a_1.gd" id="1_sw1a5"]
 [ext_resource type="PackedScene" uid="uid://63coqkfkg8do" path="res://Scenes/GOI.tscn" id="2_gthoy"]
 [ext_resource type="Shader" uid="uid://8o483krwo7c8" path="res://Shaders/ScreenCRT.gdshader" id="3_bcaxf"]
+[ext_resource type="PackedScene" uid="uid://b2ohht1dkwvgh" path="res://Scenes/key.tscn" id="5_ovypf"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_bcaxf"]
 tile_data = PackedInt32Array(0, 0, 1, 65536, 0, 1, 1, 0, 1, 65537, 0, 1, 131073, 0, 1, 2, 0, 1, 65538, 0, 1, 131074, 0, 1, 3, 0, 1, 65539, 0, 1, 131075, 0, 1, 4, 0, 1, 65540, 0, 1, 131076, 0, 1, 5, 0, 1, 65541, 0, 1, 131077, 0, 1, 6, 0, 1, 65542, 0, 1, 131078, 0, 1, 7, 0, 1, 65543, 0, 1, 131079, 0, 1, 8, 0, 1, 65544, 0, 1, 131080, 0, 1, 9, 0, 1, 65545, 0, 1, 131081, 0, 1, 10, 0, 1, 65546, 0, 1, 131082, 0, 1, 11, 0, 1, 65547, 0, 1, 131083, 0, 1, 12, 0, 1, 65548, 0, 1, 131084, 0, 1, 131085, 0, 1)
@@ -66,7 +67,7 @@ shader_parameter/vignette_intensity = 0.6
 shader_parameter/noise_intensity = 0.05
 shader_parameter/flicker_intensity = 0.03
 shader_parameter/brightness = 1.198000033155
-shader_parameter/contrast = 0.9760000226100001
+shader_parameter/contrast = 0.97600002261
 
 [node name="Node2D" type="Node2D" unique_id=1421456853]
 script = ExtResource("1_sw1a5")
@@ -83,7 +84,7 @@ tile_map_data = PackedByteArray("AAADAA4AAAAAAAEAAAAEAA4AAAAAAAEAAAAFAA4AAAAAAAE
 tile_set = SubResource("TileSet_3waln")
 navigation_visibility_mode = 1
 
-[node name="CharacterBody2D" parent="." unique_id=156222911 instance=ExtResource("2_gthoy")]
+[node name="Player" parent="." unique_id=156222911 groups=["player"] instance=ExtResource("2_gthoy")]
 position = Vector2(229, 208)
 collision_layer = 3
 collision_mask = 3
@@ -98,3 +99,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="key" parent="." unique_id=1259834109 instance=ExtResource("5_ovypf")]
+position = Vector2(128, 214)
