@@ -117,7 +117,13 @@ func _on_enter_text_submitted(new_text: String):
 			if not is_inside_tree(): return
 			GameManager.load_level(GameManager.current_camera)
 		else:
+		
+			wrong_code_feedback()  # ✅ вот здесь
 			await hacker_type("Неверный код. Посмотри внимательнее на скриншот.")
+			if not is_inside_tree(): return
+			input_field.editable = true
+			input_field.grab_focus()
+			
 			if not is_inside_tree(): return
 			input_field.editable = true
 			input_field.grab_focus()
@@ -126,7 +132,9 @@ func _on_enter_text_submitted(new_text: String):
 		if input == current_task_code:
 			await on_hex_accepted()
 		else:
+			wrong_code_feedback()  # ✅ и здесь
 			await hacker_type("Неверный HEX-код. Он был показан после подбора ключа.")
+		
 			if not is_inside_tree(): return
 			input_field.editable = true
 			input_field.grab_focus()
@@ -150,3 +158,34 @@ func on_hex_accepted():
 		await get_tree().create_timer(1.0).timeout
 		if not is_inside_tree(): return
 		GameManager.next_camera()
+# === НАКАЗАНИЕ ЗА НЕВЕРНЫЙ КОД ===
+func wrong_code_feedback():
+	GameManager.music_glitch()
+	shake_terminal()
+	crt_spike()
+	red_flash()
+func crt_spike():
+	var crt = get_tree().get_first_node_in_group("crt")
+	if crt == null or crt.material == null:
+		return
+	var mat = crt.material
+	mat.set_shader_parameter("glitch_intensity", 1.0)
+	mat.set_shader_parameter("noise_intensity", 0.25)
+	await get_tree().create_timer(0.4, false).timeout
+	mat.set_shader_parameter("glitch_intensity", 0.5)
+	mat.set_shader_parameter("noise_intensity", 0.05)
+func shake_terminal():
+	var original := position
+	for i in range(6):
+		position = original + Vector2(randf_range(-6.0, 6.0), randf_range(-4.0, 4.0))
+		await get_tree().create_timer(0.04, false).timeout
+	position = original
+
+func red_flash():
+	var flash := ColorRect.new()
+	flash.color = Color(0.938, 0.246, 0.325, 0.25)
+	flash.set_anchors_preset(Control.PRESET_FULL_RECT)
+	flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(flash)
+	await get_tree().create_timer(0.15, false).timeout
+	flash.queue_free()

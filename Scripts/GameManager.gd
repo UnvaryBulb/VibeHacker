@@ -114,6 +114,7 @@ func _input(event: InputEvent):
 func toggle_pause():
 	if pause_menu != null:
 		resume_game()
+		GameManager.remove_underwater_effect()
 	else:
 		open_pause_menu()
 
@@ -129,3 +130,83 @@ func resume_game():
 	if pause_menu != null:
 		pause_menu.queue_free()
 		pause_menu = null
+# === АУДИО-ЭФФЕКТЫ ===
+
+# === ГЛИТЧ ПРИ НЕВЕРНОМ КОДЕ (v2: звук не пропадает) ===
+func music_glitch(duration: float = 0.7):
+	var bus := AudioServer.get_bus_index("Music")
+	if bus < 0:
+		return
+	
+	# Ищем заранее положенные эффекты на шине Music
+	var dist: AudioEffectDistortion = null
+	var pitch: AudioEffectPitchShift = null
+	var dist_idx := -1
+	var pitch_idx := -1
+	for i in range(AudioServer.get_bus_effect_count(bus)):
+		var e := AudioServer.get_bus_effect(bus, i)
+		if e is AudioEffectDistortion:
+			dist = e
+			dist_idx = i
+		elif e is AudioEffectPitchShift:
+			pitch = e
+			pitch_idx = i
+	
+	var original_vol := AudioServer.get_bus_volume_db(bus)
+	
+	# 1. Включаем биткраш — музыка начинает хрустеть
+	if dist_idx >= 0:
+		AudioServer.set_bus_effect_enabled(bus, dist_idx, true)
+	
+	# 2. Питч-качели → "пластинка останавливается рукой"
+	if pitch != null:
+		if pitch_idx >= 0:
+			AudioServer.set_bus_effect_enabled(bus, pitch_idx, true)
+		var t := create_tween()
+		t.tween_property(pitch, "pitch_scale", 0.7, 0.07)
+		t.tween_property(pitch, "pitch_scale", 1.25, 0.07)
+		t.tween_property(pitch, "pitch_scale", 0.5, 0.1)
+		t.tween_property(pitch, "pitch_scale", 0.35, 0.25)
+	
+	# 3. Громкость ВОЛНИТ (-6 dB), но НЕ исчезает
+	for i in range(8):
+		AudioServer.set_bus_volume_db(bus, original_vol - 6.0 if i % 2 == 0 else original_vol)
+		await get_tree().create_timer(0.045, false).timeout
+	
+	# 4. Держим грязь до конца длительности
+	await get_tree().create_timer(maxf(duration - 0.36, 0.1), false).timeout
+	
+	# 5. Плавно возвращаем питч и выключаем эффекты
+	if pitch != null:
+		var t2 := create_tween()
+		t2.tween_property(pitch, "pitch_scale", 1.0, 0.12)
+		await t2.finished
+		if pitch_idx >= 0:
+			AudioServer.set_bus_effect_enabled(bus, pitch_idx, false)
+	if dist_idx >= 0:
+		AudioServer.set_bus_effect_enabled(bus, dist_idx, false)
+	AudioServer.set_bus_volume_db(bus, original_vol)
+# === ЭФФЕКТ "ПОД ВОДОЙ" НА ПАУЗЕ ===
+var _underwater_idx: int = -1  # ✅ ТЕПЕРЬ ПЕРЕМЕННАЯ ОБЪЯВЛЕНА
+
+func apply_underwater_effect() -> void:
+	if _underwater_idx >= 0:
+		return  # уже применён, не дублируем
+	var master_bus := AudioServer.get_bus_index("Master")
+	var lpf := AudioEffectLowPassFilter.new()
+	lpf.cutoff_hz = 500.0
+	lpf.resource_name = "UnderwaterLPF"
+	AudioServer.add_bus_effect(master_bus, lpf)
+	_underwater_idx = AudioServer.get_bus_effect_count(master_bus) - 1
+
+func remove_underwater_effect() -> void:
+	if _underwater_idx < 0:
+		return  # нечего убирать
+	AudioServer.remove_bus_effect(AudioServer.get_bus_index("Master"), _underwater_idx)
+	_underwater_idx = -1
+
+# Приглушаем звуки в момент подбора ключа (bullet-time)
+func muffle_sounds():
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), -6.0)
+	await get_tree().create_timer(1.5, false).timeout
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), 0.0)

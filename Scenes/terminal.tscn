@@ -28,7 +28,6 @@ offset_top = 19.0
 offset_right = 1121.0
 offset_bottom = 58.0
 theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
-text = "GJJJJJJJJJJJJJJJJJJJSDFSDFSDF"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -37,7 +36,7 @@ layout_mode = 0
 offset_left = 51.0
 offset_top = 52.0
 offset_right = 1136.0
-offset_bottom = 615.0
+offset_bottom = 606.0
 theme_override_constants/separation = 5
 
 [node name="logs" type="RichTextLabel" parent="VBoxContainer" unique_id=703003062]
