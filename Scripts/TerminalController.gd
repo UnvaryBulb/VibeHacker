@@ -92,7 +92,7 @@ func hacker_type(text: String, speed: float = 0.03):
 		var tree = get_tree()
 		if tree == null:
 			return
-		await tree.create_timer(speed).timeout
+		await get_tree().create_timer(speed, false).timeout
 	
 	if not is_inside_tree():
 		return

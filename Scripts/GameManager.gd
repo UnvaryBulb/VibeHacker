@@ -97,3 +97,35 @@ func on_key_collected(hex_code: String):
 	level_completed.emit(hex_code)
 	await get_tree().create_timer(1.5).timeout
 	load_terminal()
+# === ПАУЗА (ESC = переключатель) ===
+var pause_menu_scene: PackedScene = preload("res://Scenes/mini_menu.tscn")
+var pause_menu: Node = null
+# ✅ game_started НЕ объявляем — она уже есть выше в файле
+
+func _init() -> void:
+	# GameManager ловит ESC даже когда игра на паузе
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+func _input(event: InputEvent):
+	if event.is_action_pressed("ui_cancel") and game_started:
+		toggle_pause()
+		get_viewport().set_input_as_handled()
+
+func toggle_pause():
+	if pause_menu != null:
+		resume_game()
+	else:
+		open_pause_menu()
+
+func open_pause_menu():
+	if pause_menu != null:
+		return
+	pause_menu = pause_menu_scene.instantiate()
+	get_tree().root.add_child(pause_menu)
+	get_tree().paused = true
+
+func resume_game():
+	get_tree().paused = false
+	if pause_menu != null:
+		pause_menu.queue_free()
+		pause_menu = null
