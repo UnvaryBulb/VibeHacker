@@ -60,6 +60,19 @@
 | Звук | Собственный OST и SFX-банк |
 | Архитектура | Autoload `GameManager` + глобальные группы (`player`) |
 
+## 📁 Структура проекта
+
+Подробные README находятся в каждой директории:
+
+| Директория | Что внутри |
+|---|---|
+| [`Assets/`](Assets/README.md) | Музыка (OST), звуки (SFX), спрайты, шрифт |
+| [`Scenes/`](Scenes/README.md) | Сцены Godot: меню, терминал, уровни, попапы |
+| [`Scripts/`](Scripts/README.md) | Код игры на GDScript |
+| [`Shaders/`](Shaders/README.md) | CRT-шейдеры и эффекты меню |
+
+Обзор структуры — в [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).
+
 ## 👥 Команда — Unvarlings
 
 | Участник | Роль |
