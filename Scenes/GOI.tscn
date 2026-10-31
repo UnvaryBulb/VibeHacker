@@ -176,6 +176,27 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_uyfgc"]
+offsets = PackedFloat32Array(0, 0.25104603, 0.6610879, 0.74058574, 1)
+colors = PackedColorArray(1, 0.84313726, 0, 1, 0.44389206, 0.38416606, 0.063138895, 1, 0.39575696, 0.34443882, 0.06860402, 1, 0.35449827, 0.3103869, 0.07328841, 1, 0.101960786, 0.101960786, 0.101960786, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_18m3x"]
+gradient = SubResource("Gradient_uyfgc")
+width = 4
+height = 4
+fill = 1
+fill_from = Vector2(0.1923077, 1)
+fill_to = Vector2(0.6965812, 0.02991453)
+repeat = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cncb8"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 70.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, 250, 0)
+scale_min = 0.099999994
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=156222911]
 disable_mode = 2
 script = ExtResource("1_hvclg")
@@ -210,3 +231,12 @@ bus = &"SFX"
 [node name="LandSound" type="AudioStreamPlayer2D" parent="." unique_id=301771890]
 stream = ExtResource("6_wkr0a")
 bus = &"SFX"
+
+[node name="Dust" type="GPUParticles2D" parent="." unique_id=1729027102]
+position = Vector2(0, 14)
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_18m3x")
+lifetime = 0.4
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_cncb8")
