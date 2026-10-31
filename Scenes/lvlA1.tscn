@@ -75,15 +75,26 @@ loop = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sw1a5"]
 shader = ExtResource("3_bcaxf")
-shader_parameter/scanline_intensity = 0.3
+shader_parameter/scanline_intensity = 0.25
 shader_parameter/scanline_width = 3.0
-shader_parameter/curvature_amount = 0.15
-shader_parameter/chromatic_aberration = 0.003
-shader_parameter/vignette_intensity = 0.6
-shader_parameter/noise_intensity = 0.05
-shader_parameter/flicker_intensity = 0.03
-shader_parameter/brightness = 1.198000033155
-shader_parameter/contrast = 0.97600002261
+shader_parameter/curvature_amount = 0.12
+shader_parameter/chromatic_aberration = 0.0050000002375
+shader_parameter/vignette_intensity = 0.5
+shader_parameter/noise_intensity = 0.04
+shader_parameter/flicker_intensity = 0.02
+shader_parameter/brightness = 1.08
+shader_parameter/contrast = 1.08
+shader_parameter/saturation = 1.15
+shader_parameter/mask_intensity = 0.12
+shader_parameter/mask_size = 3.0
+shader_parameter/rolling_band_intensity = 0.06
+shader_parameter/rolling_band_speed = 0.06
+shader_parameter/glitch_intensity = 0.5
+shader_parameter/glitch_frequency = 0.08
+shader_parameter/interlace_intensity = 0.08
+shader_parameter/glow_intensity = 0.25
+shader_parameter/corner_radius = 0.1
+shader_parameter/glare_intensity = 0.03
 
 [node name="Node2D" type="Node2D" unique_id=1421456853]
 script = ExtResource("1_sw1a5")
@@ -110,6 +121,7 @@ position = Vector2(-408, -407)
 stream = SubResource("AudioStreamOggVorbis_ovypf")
 volume_db = -15.0
 autoplay = true
+bus = &"Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1453118071]
 layer = 0

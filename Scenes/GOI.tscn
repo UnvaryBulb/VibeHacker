@@ -191,17 +191,16 @@ sprite_frames = SubResource("SpriteFrames_cnwd3")
 animation = &"walk"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1624806077]
-position = Vector2(-1, -64)
+position = Vector2(0, -10)
 zoom = Vector2(2, 2)
 process_callback = 0
 position_smoothing_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("3_hvclg")
-shake_decay = 20
 
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="." unique_id=1645539290]
 stream = ExtResource("4_uyfgc")
-volume_db = -5.0
+volume_db = -15.0
 bus = &"SFX"
 
 [node name="StepSound" type="AudioStreamPlayer2D" parent="." unique_id=1587515201]
