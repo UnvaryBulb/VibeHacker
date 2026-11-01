@@ -13,7 +13,9 @@ func _ready():
 	await get_tree().process_frame
 	if not is_inside_tree():
 		return
-	
+	# ✅ Звук печатания игрока
+	if input_field:
+		input_field.text_changed.connect(_on_input_text_changed)
 	# ✅ Подключаемся к смене камер (без перезагрузки сцены)
 	if GameManager and not GameManager.camera_changed.is_connected(_on_camera_changed):
 		GameManager.camera_changed.connect(_on_camera_changed)
@@ -217,3 +219,8 @@ func red_flash():
 	add_child(flash)
 	await get_tree().create_timer(0.15, false).timeout
 	flash.queue_free()
+func _on_input_text_changed(new_text: String):
+	# Проигрываем звук клавиши, если текст не пустой (иначе это backspace)
+	if type_sound and new_text.length() > 0:
+		type_sound.pitch_scale = randf_range(0.85, 1.15)
+		type_sound.play()
