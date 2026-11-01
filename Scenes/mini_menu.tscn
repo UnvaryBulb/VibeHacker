@@ -71,14 +71,15 @@ layer = 12
 script = ExtResource("1_umv6m")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1110653220]
-offset_right = 208.0
+offset_left = 943.0
+offset_right = 1151.0
 offset_bottom = 232.0
 color = Color(0.06053035, 0.06053035, 0.060530342, 0.34901962)
 
 [node name="MusicControl" type="HSlider" parent="." unique_id=2147477917]
-offset_left = 56.0
+offset_left = 999.0
 offset_top = 205.99998
-offset_right = 224.75378
+offset_right = 1167.7538
 offset_bottom = 234.99998
 rotation = -1.5732167
 theme_override_icons/grabber = ExtResource("2_uhhhk")
@@ -98,9 +99,9 @@ scale = Vector2(0.5833348, 0.5714286)
 texture = ExtResource("6_tsy0j")
 
 [node name="SFXControl" type="HSlider" parent="." unique_id=218901070]
-offset_left = 15.0
+offset_left = 958.0
 offset_top = 206.0
-offset_right = 183.0
+offset_right = 1126.0
 offset_bottom = 235.0
 rotation = -1.5714799
 theme_override_icons/grabber = ExtResource("2_uhhhk")
@@ -120,9 +121,9 @@ scale = Vector2(0.57142866, 0.57142836)
 texture = ExtResource("8_ug8nu")
 
 [node name="resume_button" type="Button" parent="." unique_id=701704749]
-offset_left = 111.0
+offset_left = 1054.0
 offset_top = 29.0
-offset_right = 191.0
+offset_right = 1134.0
 offset_bottom = 47.0
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxTexture_cnwd3")
@@ -130,9 +131,9 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_prcul")
 theme_override_styles/hover = SubResource("StyleBoxTexture_g4v7s")
 
 [node name="exit_button" type="Button" parent="." unique_id=1543744260]
-offset_left = 111.0
+offset_left = 1054.0
 offset_top = 83.0
-offset_right = 191.0
+offset_right = 1134.0
 offset_bottom = 131.0
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxTexture_owyel")
@@ -141,9 +142,9 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_3jmd5")
 autowrap_mode = 3
 
 [node name="quit_button" type="Button" parent="." unique_id=509386231]
-offset_left = 111.0
+offset_left = 1054.0
 offset_top = 165.0
-offset_right = 191.0
+offset_right = 1134.0
 offset_bottom = 213.0
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxTexture_3p34a")

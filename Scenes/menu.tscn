@@ -122,7 +122,7 @@ grow_vertical = 2
 [node name="Background" type="Sprite2D" parent="." unique_id=871866583]
 texture_filter = 1
 position = Vector2(575.00006, 324)
-scale = Vector2(2.2734375, 2.226351)
+scale = Vector2(2.5134363, 3.2263498)
 texture = ExtResource("2_rfqti")
 
 [node name="play" type="Button" parent="." unique_id=1853052987]
