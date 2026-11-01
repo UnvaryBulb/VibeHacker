@@ -136,6 +136,7 @@ func open_pause_menu():
 
 func resume_game():
 	get_tree().paused = false
+	GameManager.remove_underwater_effect()  # ✅ Снимаем эффект при любом выходе из паузы
 	if pause_menu != null:
 		pause_menu.queue_free()
 		pause_menu = null
