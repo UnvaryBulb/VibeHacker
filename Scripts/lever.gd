@@ -36,3 +36,14 @@ func _on_body_entered(body: Node2D):
 		if sound:
 			sound.play()
 		pressed_state.emit(true)
+func reset():
+	if not pulled:
+		return  # не дёрнут — нечего сбрасывать
+	pulled = false
+	if sprite:
+		sprite.flip_v = false      # спрайт обратно
+	if lamp:
+		lamp.modulate = Color.WHITE  # лампа гаснет
+	if sound:
+		sound.play()                 # обратный щелчок
+	pressed_state.emit(false)        # ✅ дверь получит false и закроется САМА

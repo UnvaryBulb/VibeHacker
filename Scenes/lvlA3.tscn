@@ -245,3 +245,6 @@ scale = Vector2(1, 0.52000976)
 [node name="Spike14" parent="." unique_id=1319641770 instance=ExtResource("10_a2xrf")]
 position = Vector2(397, -9)
 scale = Vector2(-0.9866879, 0.55583864)
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1637720245]
+position = Vector2(591, 192)

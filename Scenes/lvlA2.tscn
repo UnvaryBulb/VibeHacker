@@ -180,3 +180,6 @@ offset_right = 80.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1661592764]
+position = Vector2(367, 193)

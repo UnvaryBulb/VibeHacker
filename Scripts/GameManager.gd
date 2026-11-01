@@ -99,16 +99,8 @@ func next_camera():
 func on_key_collected(hex_code: String):
 	collected_hex_code = hex_code
 	level_completed.emit(hex_code)
-	
-	# Музыка тише на стоп-кадре — драматичнее
-	var music_bus := AudioServer.get_bus_index("Music")
-	AudioServer.set_bus_volume_db(music_bus, -12.0)
-	
-	# default true → таймер тикает даже на паузе: секундный драматический беat
-	await get_tree().create_timer(1.0).timeout
-	
-	# ✅ Снимаем паузу ПЕРЕД сменой сцены, иначе терминал родится замороженным
-	AudioServer.set_bus_volume_db(music_bus, 0.0)
+	# Музыка сразу в норму, паузу снимаем и уходим БЕЗ ожидания
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), 0.0)
 	get_tree().paused = false
 	cutscene = false
 	load_terminal()
@@ -116,7 +108,12 @@ func on_key_collected(hex_code: String):
 var pause_menu_scene: PackedScene = preload("res://Scenes/mini_menu.tscn")
 var pause_menu: Node = null
 # ✅ game_started НЕ объявляем — она уже есть выше в файле
-
+# === ЛОВИМ ESC ===
+func _input(event: InputEvent):
+	# ESC не открывает паузу поверх катсцены (стоп-кадр с попапом)
+	if event.is_action_pressed("ui_cancel") and game_started and not cutscene:
+		toggle_pause()
+		get_viewport().set_input_as_handled()
 func _init() -> void:
 	# GameManager ловит ESC даже когда игра на паузе
 	process_mode = Node.PROCESS_MODE_ALWAYS

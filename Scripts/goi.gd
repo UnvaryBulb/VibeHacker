@@ -33,7 +33,15 @@ var run_step_interval: float = 0.18
 
 # === ПРИЗЕМЛЕНИЕ ===
 var min_land_speed: float = 150.0
+var dead := false
+var spawn_point: Vector2
 
+func _ready():
+	# Точка респауна: маркер SpawnPoint в уровне или стартовая позиция
+	spawn_point = global_position
+	var marker = get_tree().current_scene.get_node_or_null("SpawnPoint")
+	if marker:
+		spawn_point = marker.global_position
 func _physics_process(delta):
 	if dead:
 		return
@@ -162,14 +170,61 @@ func hitstop():
 	# 4-й параметр true = таймер игнорирует time_scale (реальное время)
 	await get_tree().create_timer(0.07, true, false, true).timeout
 	Engine.time_scale = 1.0
-var dead := false
 
 func die():
 	if dead:
 		return
 	dead = true
 	velocity = Vector2.ZERO
-	sprite.modulate = Color(1.0, 0.3, 0.3)  # краснеет
-	# Тут можно проиграть звук смерти: death_sound.play()
-	await get_tree().create_timer(0.6, false).timeout
-	get_tree().reload_current_scene()  # перезапуск уровня
+	
+	# === ЭФФЕКТЫ СМЕРТИ ===
+	camera.shake(6.0)
+	spawn_dust(14)                      # взрыв пыли в точке смерти
+	sprite.modulate = Color(1.0, 0.3, 0.3)
+	# if has_node("DeathSound"): $DeathSound.play()
+	
+	# === БЛЭКАУТ (маскирует телепорт) ===
+	var fade := _make_fade()
+	var t := create_tween()
+	t.tween_property(fade, "color:a", 1.0, 0.25)
+	await t.finished
+	
+	# === РЕСПАУН ПОД ЧЕРНОТОЙ ===
+	_respawn()
+	
+	var t2 := create_tween()
+	t2.tween_property(fade, "color:a", 0.0, 0.35)
+	await t2.finished
+	fade.get_parent().queue_free()  # убираем CanvasLayer с блэкаутом
+
+func _make_fade() -> ColorRect:
+	var layer := CanvasLayer.new()
+	layer.layer = 30  # поверх всего, включая CRT
+	var rect := ColorRect.new()
+	rect.color = Color(0, 0, 0, 0)
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(rect)
+	add_child(layer)
+	return rect
+
+func _respawn():
+	global_position = spawn_point
+	velocity = Vector2.ZERO
+	dead = false
+	# Возвращаем вид персонажа
+	sprite.modulate = Color.WHITE
+	sprite.scale = Vector2(2, 2)
+	sprite.rotation = 0.0
+	# Сбрасываем таймеры, чтобы не выстрелили случайные шаги/прыжки
+	step_timer = 0.0
+	coyote_timer = 0.0
+	jump_buffer_timer = 0.0
+	# Ящики возвращаются домой (иначе застрянут в ямах = софблок)
+	for crate in get_tree().get_nodes_in_group("pushable"):
+		if crate.has_method("reset"):
+			crate.reset()
+		# Рычаги возвращаются в исходное (двери закроются по сигналу)
+	for switch in get_tree().get_nodes_in_group("switches"):
+		if switch.has_method("reset"):
+			switch.reset()
