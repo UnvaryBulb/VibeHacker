@@ -4,7 +4,7 @@ extends CharacterBody2D
 var gravity: float = 1200.0
 var push_speed: float = 0.0        # скорость, которую "передал" игрок
 var slide_friction: float = 1200.0  # как быстро доскальзывает по инерции
-var push_multiplier: float = 0.7   # доля скорости игрока (0.5 = тяжёлый, 0.9 = лёгкий)
+var push_multiplier: float = 1   # доля скорости игрока (0.5 = тяжёлый, 0.9 = лёгкий)
 var home_position: Vector2
 
 func _ready():
