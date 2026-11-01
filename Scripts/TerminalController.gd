@@ -95,7 +95,7 @@ func start_hex_mission():
 	if not is_inside_tree(): return
 	await hacker_type("Система уровня сгенерировала код доступа.")
 	if not is_inside_tree(): return
-	await hacker_type("Введи HEX-код, который ты добыл.")
+	await hacker_type("Введи HASH-код, который ты добыл.")
 	if not is_inside_tree(): return
 	
 	state = "waiting_hex"
@@ -163,7 +163,7 @@ func _on_enter_text_submitted(new_text: String):
 			await on_hex_accepted()
 		else:
 			wrong_code_feedback()  # ✅ и здесь
-			await hacker_type("Неверный HEX-код. Он был показан после подбора ключа.")
+			await hacker_type("Неверный HASH-код. Он был показан после подбора ключа.")
 		
 			if not is_inside_tree(): return
 			input_field.editable = true
@@ -174,7 +174,7 @@ func on_hex_accepted():
 	if cam == 3:
 		await hacker_type("Код принят! Открываю прямой поток камеры #3...")
 		if not is_inside_tree(): return
-		await hacker_type("Погоди. Это что... ТЫКВА?! Связанная?!")
+		await hacker_type("Погоди. Это что... ТЫКВА?! Похищенная?!")
 		if not is_inside_tree(): return
 		
 		# ✅ ПОКАЗЫВАЕМ ТЫКВУ (если есть картинка)
@@ -208,7 +208,7 @@ func show_finale_screen():
 	# Показываем финальное сообщение
 	push("\n[color=cyan]════════ КОНЕЦ ИГРЫ ════════[/color]\n")
 	push("[color=yellow]Спасибо за игру! Ты спас тыкву! 🎃[/color]\n")
-	push("[color=green]Нажми ENTER для возврата в главное меню[/color]\n")
+	push("[color=green]Введите любой символ в терминал для возврата в главное меню[/color]\n")
 
 	
 	# Ждём нажатия Enter

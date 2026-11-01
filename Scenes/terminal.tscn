@@ -18,8 +18,10 @@ script = ExtResource("1_xws0m")
 [node name="ColorRect" type="ColorRect" parent="." unique_id=690197226]
 material = SubResource("ShaderMaterial_2rnly")
 layout_mode = 0
-offset_right = 1150.0
-offset_bottom = 647.0
+offset_left = -133.0
+offset_top = -55.0
+offset_right = 1240.0
+offset_bottom = 739.0
 color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 
 [node name="top" type="Label" parent="." unique_id=1633602050]
@@ -29,6 +31,7 @@ offset_top = 19.0
 offset_right = 1121.0
 offset_bottom = 58.0
 theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+text = "CAM 1 | ДОБЫТО: ??"
 horizontal_alignment = 1
 vertical_alignment = 1
 
