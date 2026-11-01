@@ -2,6 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://digjdykgqgfow" path="res://Assets/PressStart2P-Regular.ttf" id="1_0dftn"]
 [ext_resource type="Script" uid="uid://d1cy671e2o504" path="res://Scripts/TerminalController.gd" id="1_xws0m"]
+[ext_resource type="AudioStream" uid="uid://c8et3dfttbdq2" path="res://Assets/SFX/type.ogg" id="3_rwk22"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2rnly"]
 
@@ -88,5 +89,8 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
 theme_override_fonts/font = ExtResource("1_0dftn")
 flat = true
+
+[node name="TypeSound" type="AudioStreamPlayer2D" parent="." unique_id=334721165]
+stream = ExtResource("3_rwk22")
 
 [connection signal="text_submitted" from="VBoxContainer/HBoxContainer/enter" to="." method="_on_enter_text_submitted"]

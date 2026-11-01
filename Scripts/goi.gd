@@ -6,7 +6,7 @@ extends CharacterBody2D
 @onready var land_sound: AudioStreamPlayer2D = $LandSound
 @onready var step_sound: AudioStreamPlayer2D = $StepSound
 @onready var dust: GPUParticles2D = $Dust
-
+@onready var death_sound: AudioStreamPlayer2D = $DeathSound
 # === НАСТРОЙКИ ДВИЖЕНИЯ ===
 var walk_speed = 200
 var run_speed = 350
@@ -181,7 +181,8 @@ func die():
 	camera.shake(6.0)
 	spawn_dust(14)                      # взрыв пыли в точке смерти
 	sprite.modulate = Color(1.0, 0.3, 0.3)
-	# if has_node("DeathSound"): $DeathSound.play()
+	
+	death_sound.play()
 	
 	# === БЛЭКАУТ (маскирует телепорт) ===
 	var fade := _make_fade()

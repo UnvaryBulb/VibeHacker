@@ -2,7 +2,7 @@ extends Control
 
 @onready var logs: RichTextLabel = $VBoxContainer/logs
 @onready var input_field: LineEdit = $VBoxContainer/HBoxContainer/enter
-
+@onready var type_sound: AudioStreamPlayer2D = $TypeSound  # ✅ НОВАЯ ССЫЛКА
 var state: String = "chat"
 var current_task_code: String = ""
 var is_typing: bool = false
@@ -106,10 +106,17 @@ func hacker_type(text: String, speed: float = 0.03):
 	input_field.editable = false
 	
 	push("[color=yellow]> ХАКЕР:[/color] ")
+	var char_count := 0
 	for character in text:
 		if not is_inside_tree():
 			return
 		push(character)
+		# ✅ ЗВУК ПЕЧАТАНИЯ (каждый символ)
+		if type_sound and character != " ":
+			char_count += 1
+			# Проигрываем каждый символ, но с рандомным питчем для естественности
+			type_sound.pitch_scale = randf_range(0.85, 1.15)
+			type_sound.play()
 		var tree = get_tree()
 		if tree == null:
 			return
