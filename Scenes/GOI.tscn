@@ -197,8 +197,9 @@ initial_velocity_max = 70.0
 gravity = Vector3(0, 250, 0)
 scale_min = 0.099999994
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=156222911]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=156222911 groups=["player"]]
 disable_mode = 2
+collision_layer = 3
 script = ExtResource("1_hvclg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=348609637]

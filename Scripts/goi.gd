@@ -35,6 +35,8 @@ var run_step_interval: float = 0.18
 var min_land_speed: float = 150.0
 
 func _physics_process(delta):
+	if dead:
+		return
 	# === ТАЙМЕРЫ ===
 	if is_on_floor():
 		coyote_timer = coyote_time
@@ -92,12 +94,21 @@ func _physics_process(delta):
 	else:
 		step_timer = 0.0
 	
-	# === ЗАПОМИНАЕМ СОСТОЯНИЕ ДО СТОЛКНОВЕНИЯ ===
+		# === ЗАПОМИНАЕМ СОСТОЯНИЕ ДО СТОЛКНОВЕНИЯ ===
 	var was_in_air := not is_on_floor()
 	var fall_speed := velocity.y
+	var push_speed := velocity.x   # ✅ скорость ДО того, как move_and_slide её обнулит
 	
 	move_and_slide()
 	
+		# === ТОЛКАНИЕ ЯЩИКА ===
+	for i in get_slide_collision_count():
+		var col := get_slide_collision(i)
+		var body := col.get_collider()
+		if body != null and body.is_in_group("pushable") and body.has_method("push"):
+			# Только контакт сбоку, чтобы не увозить ящик стоя на нём
+			if abs(col.get_normal().x) > 0.7:
+				body.push(push_speed)
 	# === ПРИЗЕМЛЕНИЕ ===
 	if was_in_air and is_on_floor() and fall_speed >= min_land_speed:
 		# ✅ ЗВУК ВЕРНУЛСЯ + питч от силы удара
@@ -151,3 +162,14 @@ func hitstop():
 	# 4-й параметр true = таймер игнорирует time_scale (реальное время)
 	await get_tree().create_timer(0.07, true, false, true).timeout
 	Engine.time_scale = 1.0
+var dead := false
+
+func die():
+	if dead:
+		return
+	dead = true
+	velocity = Vector2.ZERO
+	sprite.modulate = Color(1.0, 0.3, 0.3)  # краснеет
+	# Тут можно проиграть звук смерти: death_sound.play()
+	await get_tree().create_timer(0.6, false).timeout
+	get_tree().reload_current_scene()  # перезапуск уровня

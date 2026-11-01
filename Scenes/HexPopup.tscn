@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bijtaw1vxqad8" path="res://Scripts/hex_popup.gd" id="1_fdw6w"]
 
 [node name="HexPopup" type="CanvasLayer" unique_id=1959296605]
+process_mode = 3
 layer = 20
 script = ExtResource("1_fdw6w")
 

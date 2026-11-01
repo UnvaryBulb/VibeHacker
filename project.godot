@@ -13,7 +13,7 @@ config_version=5
 config/name="gamejama"
 run/main_scene="uid://dncuqehm1uk0r"
 config/features=PackedStringArray("4.7", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://doa8tlj135dl6"
 
 [audio]
 
@@ -34,6 +34,8 @@ window/stretch/aspect="expand"
 
 player=""
 crt=""
+pushable=""
+switches=""
 
 [gui]
 

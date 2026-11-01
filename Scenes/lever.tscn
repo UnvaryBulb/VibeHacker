@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://3vuamtqv0ls7"]
+
+[ext_resource type="Script" uid="uid://dnccbeqqtb38j" path="res://Scripts/lever.gd" id="1_wv1st"]
+[ext_resource type="Texture2D" uid="uid://difnonkug4pty" path="res://Assets/Sprites/atlas_UPDATE.png" id="2_6kuia"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnwd3"]
+size = Vector2(17, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnwd3"]
+atlas = ExtResource("2_6kuia")
+region = Rect2(68, 17, 16, 16)
+
+[node name="Lever" type="Area2D" unique_id=1108882929 groups=["switches"]]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_wv1st")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=943914569]
+shape = SubResource("RectangleShape2D_cnwd3")
+
+[node name="Handle" type="Sprite2D" parent="." unique_id=1380140896]
+texture = SubResource("AtlasTexture_cnwd3")

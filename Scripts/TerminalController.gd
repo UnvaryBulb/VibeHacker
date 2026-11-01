@@ -10,27 +10,48 @@ var is_typing: bool = false
 @onready var top_bar = $top  # если top — Label
 
 func _ready():
-	# Ждём один кадр
 	await get_tree().process_frame
-	# ✅ Если за это время сцену выгрузили — молча выходим
 	if not is_inside_tree():
 		return
 	
-	# Показываем добытый код в статус-баре
+	# ✅ Подключаемся к смене камер (без перезагрузки сцены)
+	if GameManager and not GameManager.camera_changed.is_connected(_on_camera_changed):
+		GameManager.camera_changed.connect(_on_camera_changed)
+	
+	# ✅ Эффект "включения монитора" при загрузке сцены терминала
+	crt_power_on()
+	
 	if GameManager.collected_hex_code != "":
 		top_bar.text = "CAM %d | ДОБЫТО: %s" % [GameManager.current_camera, GameManager.collected_hex_code]
 	
-	# Восстанавливаем историю консоли
 	if GameManager.terminal_history != "":
 		logs.clear()
 		logs.append_text(GameManager.terminal_history)
-
+		
 	
-	# Терминал смотрит на фазу и решает, что кидать
 	if GameManager.phase == "hex":
 		await start_hex_mission()
 	else:
 		await start_mission(GameManager.current_camera)
+
+# === НОВАЯ СЕССИЯ БЕЗ ПЕРЕЗАГРУЗКИ ===
+func _on_camera_changed(camera_num: int):
+	# Обновляем статус-бар
+	top_bar.text = "CAM %d | ДОБЫТО: %s" % [GameManager.current_camera, GameManager.collected_hex_code]
+	# Лёгкий глитч-всплеск маскирует переход — выглядит как помехи в эфире
+	crt_spike()
+	# И сразу новая миссия в этой же сцене
+	await start_mission(camera_num)
+
+# === ЭФФЕКТ "ВКЛЮЧЕНИЯ МОНИТОРА" ===
+func crt_power_on():
+	var crt = get_tree().get_first_node_in_group("crt")
+	if crt == null or crt.material == null:
+		return
+	var mat = crt.material
+	mat.set_shader_parameter("brightness", 0.0)
+	var t := create_tween()
+	t.tween_method(func(v: float): mat.set_shader_parameter("brightness", v), 0.0, 1.08, 0.5)
 
 # ✅ Пишет и на экран, и в историю
 func push(text: String):

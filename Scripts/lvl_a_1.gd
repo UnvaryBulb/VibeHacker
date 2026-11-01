@@ -9,14 +9,16 @@ func _ready():
 const HexPopupScene: PackedScene = preload("res://Scenes/HexPopup.tscn")
 
 func _on_key_collected(hex_code: String) -> void:
-	# Показываем красивую расшифровку
+	# === СТОП-КАДР: мир замирает, живёт только попап ===
+	GameManager.cutscene = true
+	get_tree().paused = true
+	
 	var popup := HexPopupScene.instantiate()
 	add_child(popup)
 	popup.show_code(hex_code)
 	
-	# Ждём пока игрок посмотрит и попап исчезнет
 	await popup.finished
 	popup.queue_free()
 	
-	# Только ТЕПЕРЬ возвращаемся в терминал
+	# === Уходим в терминал, всё ещё на паузе ===
 	GameManager.on_key_collected(hex_code)

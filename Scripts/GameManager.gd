@@ -9,16 +9,16 @@ var cameras_data = {
 		"platformer_scene": "res://Scenes/lvlA1.tscn"
 	},
 	2: {
-		"screenshot": "res://Assets/Sprites/cam2.png",
+		"screenshot": "res://Assets/Sprites/ancap.png",
 		"code_on_screen": "4242",
 		"hex_reward": "B7",
-		"platformer_scene": "res://Scenes/LvlA2.tscn"
+		"platformer_scene": "res://Scenes/lvlA2.tscn"
 	},
 	3: {
-		"screenshot": "res://Assets/Sprites/cam3.png",
+		"screenshot": "res://Assets/Sprites/ancap.png",
 		"code_on_screen": "PUMP",
 		"hex_reward": "FF",
-		"platformer_scene": "res://Scenes/LvlA3.tscn"
+		"platformer_scene": "res://Scenes/lvlA3.tscn"
 	}
 }
 
@@ -52,13 +52,17 @@ func remember(text: String):
 	terminal_history += text
 
 func load_terminal():
-	# ✅ Уже в терминале — не перезагружаем сами себя
+	# Страховка: терминал никогда не стартует замороженным
+	get_tree().paused = false
+	cutscene = false
 	var current = get_tree().current_scene
 	if current and current.scene_file_path == "res://Scenes/game.tscn":
 		return
 	_change_scene_packed(terminal_scene)
 
 func load_level(camera_num: int):
+	get_tree().paused = false
+	cutscene = false
 	phase = "hex"
 	var data = cameras_data[camera_num]
 	_change_scene_file(data["platformer_scene"])
@@ -89,13 +93,24 @@ func next_camera():
 	if current_camera > 3:
 		print("ПОБЕДА! Тыква спасена!")
 	else:
+		# ✅ Никакой перезагрузки: живой терминал поймает сигнал сам
 		camera_changed.emit(current_camera)
-		load_terminal()
 
 func on_key_collected(hex_code: String):
 	collected_hex_code = hex_code
 	level_completed.emit(hex_code)
-	await get_tree().create_timer(1.5).timeout
+	
+	# Музыка тише на стоп-кадре — драматичнее
+	var music_bus := AudioServer.get_bus_index("Music")
+	AudioServer.set_bus_volume_db(music_bus, -12.0)
+	
+	# default true → таймер тикает даже на паузе: секундный драматический беat
+	await get_tree().create_timer(1.0).timeout
+	
+	# ✅ Снимаем паузу ПЕРЕД сменой сцены, иначе терминал родится замороженным
+	AudioServer.set_bus_volume_db(music_bus, 0.0)
+	get_tree().paused = false
+	cutscene = false
 	load_terminal()
 # === ПАУЗА (ESC = переключатель) ===
 var pause_menu_scene: PackedScene = preload("res://Scenes/mini_menu.tscn")
@@ -105,11 +120,8 @@ var pause_menu: Node = null
 func _init() -> void:
 	# GameManager ловит ESC даже когда игра на паузе
 	process_mode = Node.PROCESS_MODE_ALWAYS
-
-func _input(event: InputEvent):
-	if event.is_action_pressed("ui_cancel") and game_started:
-		toggle_pause()
-		get_viewport().set_input_as_handled()
+var cutscene: bool = false  # ✅ идёт катсцена — ESC не работаем
+	# GameManager ловит ESC даже когда игра на паузе
 
 func toggle_pause():
 	if pause_menu != null:

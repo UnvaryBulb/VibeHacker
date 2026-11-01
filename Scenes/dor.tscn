@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://lo1sxh6df2yo"]
+
+[ext_resource type="Script" uid="uid://btedrfgkxi6pp" path="res://Scenes/dor.gd" id="1_4jobq"]
+[ext_resource type="Texture2D" uid="uid://difnonkug4pty" path="res://Assets/Sprites/atlas_UPDATE.png" id="1_wbil2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prcul"]
+atlas = ExtResource("1_wbil2")
+region = Rect2(0, 17.052944, 16.337791, 16.48962)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnwd3"]
+size = Vector2(48, 16)
+
+[node name="Dor" type="StaticBody2D" unique_id=294297805]
+script = ExtResource("1_4jobq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1655320302]
+texture = SubResource("AtlasTexture_prcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D" unique_id=443189145]
+position = Vector2(-16, 0)
+texture = SubResource("AtlasTexture_prcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D/Sprite2D" unique_id=1991051626]
+position = Vector2(32, 0)
+texture = SubResource("AtlasTexture_prcul")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=110043415]
+shape = SubResource("RectangleShape2D_cnwd3")

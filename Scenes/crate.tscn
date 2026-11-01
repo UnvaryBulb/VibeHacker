@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dit7uuas6pb1d"]
+
+[ext_resource type="Script" uid="uid://d4mfo321o88o4" path="res://Scripts/crate.gd" id="1_i4r3v"]
+[ext_resource type="Texture2D" uid="uid://difnonkug4pty" path="res://Assets/Sprites/atlas_UPDATE.png" id="1_wp72f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnwd3"]
+atlas = ExtResource("1_wp72f")
+region = Rect2(52.982697, 18.977795, 12.065315, 12.24062)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnwd3"]
+size = Vector2(12, 13)
+
+[node name="Crate" type="CharacterBody2D" unique_id=1985661178 groups=["pushable"]]
+collision_mask = 3
+script = ExtResource("1_i4r3v")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=103050973]
+texture = SubResource("AtlasTexture_cnwd3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=423375160]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_cnwd3")
