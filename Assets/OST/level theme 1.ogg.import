@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ctil7usvpt2oj"
+path="res://.godot/imported/level theme 1.ogg-a3eee57824616773063d7f292e00d10f.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/OST/level theme 1.ogg"
+dest_files=["res://.godot/imported/level theme 1.ogg-a3eee57824616773063d7f292e00d10f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
