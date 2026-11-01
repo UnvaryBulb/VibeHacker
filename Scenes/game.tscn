@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://d2sjfuf7g7k70"]
 
 [ext_resource type="PackedScene" uid="uid://0cja7u1c2kpr" path="res://Scenes/terminal.tscn" id="1_qxrlw"]
-[ext_resource type="Script" uid="uid://dp8uggrav46gh" path="res://Scripts/game.gd" id="1_wrm1d"]
 [ext_resource type="Shader" uid="uid://8o483krwo7c8" path="res://Shaders/ScreenCRT.gdshader" id="2_wrm1d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cnwd3"]
@@ -44,7 +43,6 @@ tags = {
 loop = true
 
 [node name="Node2D" type="Node2D" unique_id=318810494]
-script = ExtResource("1_wrm1d")
 
 [node name="СRTLayer" type="CanvasLayer" parent="." unique_id=2003218008]
 layer = 0

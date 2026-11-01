@@ -67,6 +67,7 @@ texture = ExtResource("9_ce4q7")
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=74021174]
 process_mode = 3
+layer = 12
 script = ExtResource("1_umv6m")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1110653220]

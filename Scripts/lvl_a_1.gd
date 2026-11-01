@@ -13,6 +13,11 @@ func _on_key_collected(hex_code: String) -> void:
 	GameManager.cutscene = true
 	get_tree().paused = true
 	
+	# ✅ ПРИГЛУШАЕМ МУЗЫКУ СРАЗУ
+	var music_bus := AudioServer.get_bus_index("Music")
+	var original_vol := AudioServer.get_bus_volume_db(music_bus)
+	AudioServer.set_bus_volume_db(music_bus, original_vol - 40.0)
+	
 	var popup := HexPopupScene.instantiate()
 	add_child(popup)
 	popup.show_code(hex_code)
@@ -20,5 +25,6 @@ func _on_key_collected(hex_code: String) -> void:
 	await popup.finished
 	popup.queue_free()
 	
-	# === Уходим в терминал, всё ещё на паузе ===
+	# === Уходим в терминал ===
+	AudioServer.set_bus_volume_db(music_bus, original_vol)  # ✅ восстанавливаем
 	GameManager.on_key_collected(hex_code)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://lo1sxh6df2yo"]
 
-[ext_resource type="Script" uid="uid://btedrfgkxi6pp" path="res://Scenes/dor.gd" id="1_4jobq"]
+[ext_resource type="Script" uid="uid://btedrfgkxi6pp" path="res://Scripts/dor.gd" id="1_4jobq"]
 [ext_resource type="Texture2D" uid="uid://difnonkug4pty" path="res://Assets/Sprites/atlas_UPDATE.png" id="1_wbil2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_prcul"]

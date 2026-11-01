@@ -3,25 +3,29 @@ extends Node
 # === ДАННЫЕ КАМЕР ===
 var cameras_data = {
 	1: {
-		"screenshot": "res://Assets/Sprites/ancap.png",
+		"screenshot": "res://Assets/Sprites/cam1.png",
 		"code_on_screen": "1337",
 		"hex_reward": "A1",
 		"platformer_scene": "res://Scenes/lvlA1.tscn"
 	},
 	2: {
-		"screenshot": "res://Assets/Sprites/ancap.png",
-		"code_on_screen": "4242",
+		"screenshot": "res://Assets/Sprites/cam2.png",
+		"code_on_screen": "8015",
 		"hex_reward": "B7",
 		"platformer_scene": "res://Scenes/lvlA2.tscn"
 	},
 	3: {
-		"screenshot": "res://Assets/Sprites/ancap.png",
-		"code_on_screen": "PUMP",
+		"screenshot": "res://Assets/Sprites/cam3.png",
+		"code_on_screen": "6924",
 		"hex_reward": "FF",
-		"platformer_scene": "res://Scenes/lvlA3.tscn"
+		"platformer_scene": "res://Scenes/lvlA3.tscn",
+		"finale_image": "res://Assets/Sprites/cam4.png"  # ✅ ПУТЬ К ТЫКВЕ
 	}
 }
-
+# === НАСТРОЙКИ ГРОМКОСТИ (пользовательские) ===
+var user_music_volume: float = 0.0  # в dB, по умолчанию 0
+var user_sfx_volume: float = 0.0
+var user_master_volume: float = 0.0
 # === СОСТОЯНИЕ ИГРЫ ===
 var current_camera: int = 1
 var collected_hex_code: String = ""
@@ -37,7 +41,22 @@ var terminal_scene: PackedScene = preload("res://Scenes/game.tscn")
 
 signal level_completed(hex_code: String)
 signal camera_changed(camera_number: int)
+func set_music_volume(db: float):
+	user_music_volume = db
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), db)
 
+func set_sfx_volume(db: float):
+	user_sfx_volume = db
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), db)
+
+func set_master_volume(db: float):
+	user_master_volume = db
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db)
+
+func restore_user_volumes():
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), user_music_volume)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), user_sfx_volume)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), user_master_volume)
 func start_game():
 	# ✅ Только один раз за игру
 	if game_started:
@@ -99,12 +118,11 @@ func next_camera():
 func on_key_collected(hex_code: String):
 	collected_hex_code = hex_code
 	level_completed.emit(hex_code)
-	# Музыка сразу в норму, паузу снимаем и уходим БЕЗ ожидания
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), 0.0)
+	# Музыка уже восстановлена в скрипте уровня
 	get_tree().paused = false
 	cutscene = false
 	load_terminal()
-# === ПАУЗА (ESC = переключатель) ===
+	# === ПАУЗА (ESC = переключатель) ===
 var pause_menu_scene: PackedScene = preload("res://Scenes/mini_menu.tscn")
 var pause_menu: Node = null
 # ✅ game_started НЕ объявляем — она уже есть выше в файле

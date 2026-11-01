@@ -245,3 +245,5 @@ process_material = SubResource("ParticleProcessMaterial_cncb8")
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=447377268]
 stream = ExtResource("7_us08g")
+volume_db = -10.0
+bus = &"SFX"

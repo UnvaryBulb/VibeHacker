@@ -5,7 +5,7 @@ signal finished
 @onready var bg: ColorRect = $UI/BG
 @onready var box: VBoxContainer = $UI/Center/Box
 @onready var code_label: Label = $UI/Center/Box/Code
-
+@onready var transition: AudioStreamPlayer2D = $transition
 const GLITCH_CHARS = "0123456789ABCDEF#@%&*"
 
 func _ready():
@@ -19,7 +19,7 @@ func show_code(hex: String) -> void:
 	t.tween_property(bg, "color:a", 0.85, 0.3)
 	t.tween_property(box, "modulate:a", 1.0, 0.3)
 	await t.finished
-
+	transition.play()
 	# === 2. Глитч-"расшифровка": мельтешат случайные символы ===
 	for i in range(14):
 		code_label.text = _rand_string(hex.length())

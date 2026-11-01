@@ -168,7 +168,7 @@ autoplay = true
 bus = &"Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=418667555]
-layer = 0
+layer = 11
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=935644416]
 material = SubResource("ShaderMaterial_vj47u")

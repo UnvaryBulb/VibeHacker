@@ -158,10 +158,10 @@ bus = &"Music"
 
 [node name="MusicControl" type="HSlider" parent="." unique_id=304236662]
 texture_filter = 1
-offset_left = 1046.0001
-offset_top = 251.0
-offset_right = 1214.7539
-offset_bottom = 280.0
+offset_left = 858.0
+offset_top = 574.0
+offset_right = 1026.7538
+offset_bottom = 603.0
 rotation = -1.5732167
 theme_override_constants/center_grabber = 0
 theme_override_icons/grabber = SubResource("CompressedTexture2D_g8i7c")
@@ -174,12 +174,18 @@ step = 0.01
 value = 1.0
 script = ExtResource("2_vjb58")
 
+[node name="MusicIcon" type="Sprite2D" parent="MusicControl" unique_id=2012139806]
+texture_filter = 1
+position = Vector2(203.96552, 14.493652)
+rotation = 1.5732167
+texture = ExtResource("14_5ti5v")
+
 [node name="SFXControl" type="HSlider" parent="." unique_id=1309312870]
 texture_filter = 1
-offset_left = 964.0
-offset_top = 251.0
-offset_right = 1132.0
-offset_bottom = 280.0
+offset_left = 800.11487
+offset_top = 573.8235
+offset_right = 968.11487
+offset_bottom = 602.8235
 rotation = -1.5714799
 theme_override_icons/grabber = ExtResource("8_8ph6h")
 theme_override_icons/grabber_highlight = ExtResource("8_8ph6h")
@@ -191,21 +197,17 @@ step = 0.01
 value = 1.0
 script = ExtResource("3_con2f")
 
+[node name="SfxIcon" type="Sprite2D" parent="SFXControl" unique_id=71473972]
+texture_filter = 1
+position = Vector2(203.9897, 15.139465)
+rotation = 1.5714799
+texture = ExtResource("13_8ph6h")
+
 [node name="SFXbutton_focus" type="AudioStreamPlayer2D" parent="." unique_id=429947470]
 bus = &"SFX"
 
 [node name="SFXbutton_press" type="AudioStreamPlayer2D" parent="." unique_id=790838777]
 bus = &"SFX"
-
-[node name="SfxIcon" type="Sprite2D" parent="." unique_id=71473972]
-texture_filter = 1
-position = Vector2(979, 47)
-texture = ExtResource("13_8ph6h")
-
-[node name="MusicIcon" type="Sprite2D" parent="." unique_id=2012139806]
-texture_filter = 1
-position = Vector2(1060, 47)
-texture = ExtResource("14_5ti5v")
 
 [connection signal="button_down" from="play" to="." method="_on_play_button_down"]
 [connection signal="mouse_entered" from="play" to="." method="_on_play_mouse_entered"]

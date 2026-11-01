@@ -92,5 +92,6 @@ flat = true
 
 [node name="TypeSound" type="AudioStreamPlayer2D" parent="." unique_id=334721165]
 stream = ExtResource("3_rwk22")
+bus = &"SFX"
 
 [connection signal="text_submitted" from="VBoxContainer/HBoxContainer/enter" to="." method="_on_enter_text_submitted"]

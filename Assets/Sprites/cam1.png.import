@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7fgohvbfl0da"
-path="res://.godot/imported/четвёртая.png-81060eff8406ef92a1d0bd2a1f23c8f0.ctex"
+uid="uid://cq24x0ooejhg5"
+path="res://.godot/imported/cam1.png-bc92a68a06f822a384f4e096fe07e63c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/четвёртая.png"
-dest_files=["res://.godot/imported/четвёртая.png-81060eff8406ef92a1d0bd2a1f23c8f0.ctex"]
+source_file="res://Assets/Sprites/cam1.png"
+dest_files=["res://.godot/imported/cam1.png-bc92a68a06f822a384f4e096fe07e63c.ctex"]
 
 [params]
 

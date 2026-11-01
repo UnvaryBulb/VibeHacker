@@ -115,7 +115,7 @@ tile_set = SubResource("TileSet_3waln")
 navigation_visibility_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1453118071]
-layer = 0
+layer = 11
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1004363786]
 material = SubResource("ShaderMaterial_sw1a5")

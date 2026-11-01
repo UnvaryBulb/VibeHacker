@@ -171,16 +171,26 @@ func _on_enter_text_submitted(new_text: String):
 
 func on_hex_accepted():
 	var cam = GameManager.current_camera
-	
 	if cam == 3:
 		await hacker_type("Код принят! Открываю прямой поток камеры #3...")
 		if not is_inside_tree(): return
 		await hacker_type("Погоди. Это что... ТЫКВА?! Связанная?!")
 		if not is_inside_tree(): return
+		
+		# ✅ ПОКАЗЫВАЕМ ТЫКВУ (если есть картинка)
+		var data = GameManager.get_camera_data(3)
+		if data.has("finale_image"):
+			push('[img=500x300]' + data["finale_image"] + '[/img]\n')
+		
 		await hacker_type("Отправляю кадр в полицию. Доказательство принято!")
 		if not is_inside_tree(): return
 		await hacker_type("ТЫКВА СПАСЕНА! Отличная работа, нейросеть. 🎃")
+		if not is_inside_tree(): return
+		
+		# ✅ ФИНАЛЬНЫЙ ЭКРАН
 		state = "finale"
+		input_field.editable = false
+		await show_finale_screen()
 	else:
 		await hacker_type("Код " + current_task_code + " принят! Получаю доступ к следующей камере...")
 		if not is_inside_tree(): return
@@ -188,6 +198,46 @@ func on_hex_accepted():
 		await get_tree().create_timer(1.0).timeout
 		if not is_inside_tree(): return
 		GameManager.next_camera()
+
+# === ФИНАЛЬНЫЙ ЭКРАН ===
+func show_finale_screen():
+	# Ждём секунду, чтобы игрок осознал
+	await get_tree().create_timer(1.5, false).timeout
+	if not is_inside_tree(): return
+	
+	# Показываем финальное сообщение
+	push("\n[color=cyan]════════ КОНЕЦ ИГРЫ ════════[/color]\n")
+	push("[color=yellow]Спасибо за игру! Ты спас тыкву! 🎃[/color]\n")
+	push("[color=green]Нажми ENTER для возврата в главное меню[/color]\n")
+
+	
+	# Ждём нажатия Enter
+	input_field.editable = true
+	input_field.grab_focus()
+	input_field.text_changed.connect(_on_finale_input)
+
+func _on_finale_input(new_text: String):
+	if new_text.length() > 0:
+		input_field.text_changed.disconnect(_on_finale_input)
+		input_field.editable = false
+		# Затемнение и переход
+		await fade_to_menu()
+
+func fade_to_menu():
+	# Затемнение
+	var fade := ColorRect.new()
+	fade.color = Color(0, 0, 0, 0)
+	fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(fade)
+	
+	var t := create_tween()
+	t.tween_property(fade, "color:a", 1.0, 1.0)
+	await t.finished
+	
+	# Переход в главное меню
+	GameManager.game_started = false
+	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 # === НАКАЗАНИЕ ЗА НЕВЕРНЫЙ КОД ===
 func wrong_code_feedback():
 	GameManager.music_glitch()
