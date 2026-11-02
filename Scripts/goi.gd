@@ -176,7 +176,7 @@ func die():
 		return
 	dead = true
 	velocity = Vector2.ZERO
-	
+	GameManager.add_death()
 	# === ЭФФЕКТЫ СМЕРТИ ===
 	camera.shake(6.0)
 	spawn_dust(14)                      # взрыв пыли в точке смерти

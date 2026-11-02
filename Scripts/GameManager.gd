@@ -6,20 +6,37 @@ var cameras_data = {
 		"screenshot": "res://Assets/Sprites/cam1.png",
 		"code_on_screen": "1337",
 		"hex_reward": "D9",
-		"platformer_scene": "res://Scenes/lvlA1.tscn"
+		"platformer_scene": "res://Scenes/lvlA1.tscn",
+		"rating_thresholds": {
+			"S": {"time": 10.0, "deaths": 0},    # < 1 мин, 0 смертей
+			"A": {"time": 15.0, "deaths": 2},   # < 2 мин, < 2 смертей
+			"B": {"time": 30.0, "deaths": 5},   # < 3 мин, < 5 смертей
+			"C": {"time": 9999.0, "deaths": 999} # остальное
+		}
 	},
 	2: {
 		"screenshot": "res://Assets/Sprites/cam2.png",
 		"code_on_screen": "8015",
 		"hex_reward": "B7",
-		"platformer_scene": "res://Scenes/lvlA2.tscn"
+		"platformer_scene": "res://Scenes/lvlA2.tscn",
+		"rating_thresholds": {
+			"S": {"time": 18.0, "deaths": 0},    # < 1.5 мин, 0 смертей
+			"A": {"time": 30.0, "deaths": 3},   # < 3 мин, < 3 смертей
+			"B": {"time": 90.0, "deaths": 7},   # < 5 мин, < 7 смертей
+			"C": {"time": 9999.0, "deaths": 999}
+		}
 	},
 	3: {
 		"screenshot": "res://Assets/Sprites/cam3.png",
 		"code_on_screen": "6924",
 		"hex_reward": "FF",
 		"platformer_scene": "res://Scenes/lvlA3.tscn",
-		"finale_image": "res://Assets/Sprites/cam4.png"  # ✅ ПУТЬ К ТЫКВЕ
+		"rating_thresholds": {
+			"S": {"time": 30.0, "deaths": 0},   # < 2 мин, 0 смертей
+			"A": {"time": 40.0, "deaths": 4},   # < 4 мин, < 4 смертей
+			"B": {"time": 90.0, "deaths": 10},  # < 7 мин, < 10 смертей
+			"C": {"time": 9999.0, "deaths": 999}
+		}
 	}
 }
 # === НАСТРОЙКИ ГРОМКОСТИ (пользовательские) ===
@@ -34,6 +51,61 @@ var game_started: bool = false
 var phase: String = "screenshot"
 var terminal_history: String = ""
 
+# === СТАТИСТИКА ===
+var total_deaths: int = 0      # все смерти за игру
+var level_deaths: int = 0      # смерти только на текущем уровне
+var attempt_time: float = 0.0  # время текущей попытки
+var is_level_active: bool = false
+
+# === ЛУЧШИЕ РЕЗУЛЬТАТЫ ПО УРОВНЯМ ===
+var level_best_times: Dictionary = {}  # {1: 45.2, 2: 120.5, 3: 180.0}
+var level_best_deaths: Dictionary = {} # {1: 0, 2: 1, 3: 2}
+var level_best_ratings: Dictionary = {} # {1: "S", 2: "A", 3: "B"}
+
+func add_death():
+	total_deaths += 1
+	level_deaths += 1
+	attempt_time = 0.0
+
+func reset_level_stats():
+	level_deaths = 0
+	attempt_time = 0.0
+	is_level_active = true
+
+func start_attempt_timer():
+	attempt_time = 0.0
+	is_level_active = true
+
+func stop_attempt_timer():
+	is_level_active = false
+
+func format_time(seconds: float) -> String:
+	var mins := int(seconds / 60)
+	var secs := int(seconds) % 60
+	var ms := int((seconds - int(seconds)) * 100)
+	return "%02d:%02d.%02d" % [mins, secs, ms]
+# === ОЦЕНКА ДЛЯ КОНКРЕТНОГО УРОВНЯ ===
+func calculate_rating(camera_num: int, time: float, deaths: int) -> String:
+	var data = cameras_data[camera_num]
+	if not data.has("rating_thresholds"):
+		return "C"
+	
+	var thresholds = data["rating_thresholds"]
+	
+	# Проверяем от лучшего к худшему
+	if time <= thresholds["S"]["time"] and deaths <= thresholds["S"]["deaths"]:
+		return "S"
+	elif time <= thresholds["A"]["time"] and deaths <= thresholds["A"]["deaths"]:
+		return "A"
+	elif time <= thresholds["B"]["time"] and deaths <= thresholds["B"]["deaths"]:
+		return "B"
+	else:
+		return "C"
+
+
+func _process(delta):
+	if is_level_active:
+		attempt_time += delta
 # ✅ Защита от двойной смены сцены
 var _changing_scene: bool = false
 
@@ -83,6 +155,7 @@ func load_level(camera_num: int):
 	get_tree().paused = false
 	cutscene = false
 	phase = "hex"
+	reset_level_stats()  # ✅ сбрасываем смерти и таймер для нового уровня
 	var data = cameras_data[camera_num]
 	_change_scene_file(data["platformer_scene"])
 
@@ -118,6 +191,8 @@ func next_camera():
 func on_key_collected(hex_code: String):
 	collected_hex_code = hex_code
 	level_completed.emit(hex_code)
+	stop_attempt_timer()  # ✅ останавливаем таймер успешной попытки
+	
 	# Музыка уже восстановлена в скрипте уровня
 	get_tree().paused = false
 	cutscene = false

@@ -8,7 +8,7 @@ var current_task_code: String = ""
 var is_typing: bool = false
 
 @onready var top_bar = $top  # если top — Label
-
+var alldeaths = 0
 func _ready():
 	await get_tree().process_frame
 	if not is_inside_tree():
@@ -90,7 +90,7 @@ func start_hex_mission():
 	
 	if GameManager.terminal_history != "":
 		push("\n[color=cyan]════════ НОВАЯ СЕССИЯ ════════[/color]\n")
-	
+	await show_level_rating(GameManager.current_camera)
 	await hacker_type("Ты вернулся! Взлом прошёл успешно?")
 	if not is_inside_tree(): return
 	await hacker_type("Система уровня сгенерировала код доступа.")
@@ -188,6 +188,7 @@ func on_hex_accepted():
 		if not is_inside_tree(): return
 		
 		# ✅ ФИНАЛЬНЫЙ ЭКРАН
+		await show_final_stats()
 		state = "finale"
 		input_field.editable = false
 		await show_finale_screen()
@@ -215,6 +216,101 @@ func show_finale_screen():
 	input_field.editable = true
 	input_field.grab_focus()
 	input_field.text_changed.connect(_on_finale_input)
+# === РЕЙТИНГ ДЛЯ УРОВНЯ ===
+func show_level_rating(camera_num: int):
+	var time_str := GameManager.format_time(GameManager.attempt_time)
+	var deaths := GameManager.level_deaths
+	var rating := GameManager.calculate_rating(camera_num, GameManager.attempt_time, deaths)
+
+	
+	# Цвет рейтинга
+	var rating_color = "yellow"
+	if rating == "S":
+		rating_color = "magenta"
+	elif rating == "A":
+		rating_color = "green"
+	elif rating == "B":
+		rating_color = "cyan"
+	
+	push("\n[color=cyan]════════ РЕЗУЛЬТАТ УРОВНЯ %d ════════[/color]\n" % camera_num)
+	push("[color=white]⏱ Время:[/color] [color=green]%s[/color]\n" % time_str)
+	push("[color=white]💀 Смерти:[/color] [color=red]%d[/color]\n" % deaths)
+	push("[color=white]Рейтинг:[/color] [color=%s]%s[/color]\n" % [rating_color, rating])
+	
+	
+	push("[color=cyan]════════════════════════════════[/color]\n\n")
+	
+	# Ждём немного, чтобы игрок увидел
+	await get_tree().create_timer(1.0, false).timeout
+
+# === ФИНАЛЬНАЯ СТАТИСТИКА ===
+func show_final_stats():
+	GameManager.stop_attempt_timer()
+	
+	var time_str := GameManager.format_time(GameManager.attempt_time)
+	var deaths := GameManager.level_deaths
+	var total_deaths := GameManager.total_deaths
+	var rating := GameManager.calculate_rating(3, GameManager.attempt_time, deaths)
+	
+	push("\n[color=cyan]════════════════════════════════[/color]\n")
+	push("[color=yellow]═══ СТАТИСТИКА ПРОХОЖДЕНИЯ ═══[/color]\n")
+	push("[color=cyan]════════════════════════════════[/color]\n\n")
+	
+	# Показываем результаты по каждому уровню
+	push("[color=magenta]══ РЕЗУЛЬТАТЫ ПО УРОВНЯМ ══[/color]\n\n")
+	for cam in range(1, 4):
+		if GameManager.level_best_times.has(cam):
+			var best_time = GameManager.format_time(GameManager.level_best_times[cam])
+			var best_deaths = GameManager.level_best_deaths[cam]
+			var best_rating = GameManager.level_best_ratings[cam]
+			var rating_color = "yellow"
+			if best_rating == "S": rating_color = "magenta"
+			elif best_rating == "A": rating_color = "green"
+			elif best_rating == "B": rating_color = "cyan"
+			
+			push("[color=white]Уровень %d:[/color] [color=%s]%s[/color] | %s | 💀%d\n" % 
+				[cam, rating_color, best_rating, best_time, best_deaths])
+	
+	push("\n")
+	
+	# Текущий уровень (финальный)
+	var rating_color = "yellow"
+	if rating == "S": rating_color = "magenta"
+	elif rating == "A": rating_color = "green"
+	elif rating == "B": rating_color = "cyan"
+	
+	push("[color=white]💀 Всего смертей за игру:[/color] [color=red]%d[/color]\n" % total_deaths)
+	
+
+	
+	# Общий рейтинг (средний)
+	var total_rating := _calculate_overall_rating()
+	push("[color=magenta]ОБЩИЙ РЕЙТИНГ: %s[/color]\n\n" % total_rating)
+	
+func _calculate_overall_rating() -> String:
+	# Средний рейтинг по всем уровням
+	var rating_values = {"S": 4, "A": 3, "B": 2, "C": 1}
+	var total = 0
+	var count = 0
+	
+	for cam in range(1, 4):
+		if GameManager.level_best_ratings.has(cam):
+			total += rating_values[GameManager.level_best_ratings[cam]]
+			count += 1
+	
+	if count == 0:
+		return "C"
+	
+	var avg = total / count
+	if avg >= 3.5:
+		return "S"
+	elif avg >= 2.5:
+		return "A"
+	elif avg >= 1.5:
+		return "B"
+	else:
+		return "C"
+
 
 func _on_finale_input(new_text: String):
 	if new_text.length() > 0:
