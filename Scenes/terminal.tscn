@@ -31,7 +31,7 @@ offset_top = 19.0
 offset_right = 1121.0
 offset_bottom = 58.0
 theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
-text = "CAM 1 | ДОБЫТО: ??"
+text = "CAM 1 | ДОБЫТЫЙ HASH: ??"
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -50,21 +50,30 @@ grow_vertical = 2
 
 [node name="Box" type="VBoxContainer" parent="UI/Center" unique_id=1796426233]
 layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
 
 [node name="Title" type="Label" parent="UI/Center/Box" unique_id=837426387]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2621223, 0.88035375, 0.10498666, 1)
 theme_override_font_sizes/font_size = 24
+text = "HASH"
+horizontal_alignment = 1
 
 [node name="Code" type="Label" parent="UI/Center/Box" unique_id=1003761729]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
 theme_override_font_sizes/font_size = 96
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Hint" type="Label" parent="UI/Center/Box" unique_id=1529515894]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.31801978, 0.3180198, 0.31801972, 1)
 theme_override_font_sizes/font_size = 14
+text = "запомнить"
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="transition" type="AudioStreamPlayer2D" parent="." unique_id=1150364798]
 stream = SubResource("AudioStreamOggVorbis_fdw6w")

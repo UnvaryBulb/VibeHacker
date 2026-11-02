@@ -5,7 +5,7 @@ var cameras_data = {
 	1: {
 		"screenshot": "res://Assets/Sprites/cam1.png",
 		"code_on_screen": "1337",
-		"hex_reward": "A1",
+		"hex_reward": "D9",
 		"platformer_scene": "res://Scenes/lvlA1.tscn"
 	},
 	2: {

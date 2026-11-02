@@ -140,6 +140,7 @@ bus = &"Music"
 
 [node name="key" parent="." unique_id=1259834109 instance=ExtResource("5_vj47u")]
 position = Vector2(1511, 67)
+hex_code = "D9"
 
 [node name="Spike" parent="." unique_id=17190159 instance=ExtResource("6_gixvk")]
 position = Vector2(1512, 216)

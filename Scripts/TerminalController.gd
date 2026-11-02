@@ -24,7 +24,7 @@ func _ready():
 	crt_power_on()
 	
 	if GameManager.collected_hex_code != "":
-		top_bar.text = "CAM %d | ДОБЫТО: %s" % [GameManager.current_camera, GameManager.collected_hex_code]
+		top_bar.text = "CAM %d | ДОБЫТЫЙ HASH: %s" % [GameManager.current_camera, GameManager.collected_hex_code]
 	
 	if GameManager.terminal_history != "":
 		logs.clear()
@@ -39,7 +39,7 @@ func _ready():
 # === НОВАЯ СЕССИЯ БЕЗ ПЕРЕЗАГРУЗКИ ===
 func _on_camera_changed(camera_num: int):
 	# Обновляем статус-бар
-	top_bar.text = "CAM %d | ДОБЫТО: %s" % [GameManager.current_camera, GameManager.collected_hex_code]
+	top_bar.text = "CAM %d | ДОБЫТЫЙ HASH: %s" % [GameManager.current_camera, GameManager.collected_hex_code]
 	# Лёгкий глитч-всплеск маскирует переход — выглядит как помехи в эфире
 	crt_spike()
 	# И сразу новая миссия в этой же сцене
@@ -172,7 +172,7 @@ func _on_enter_text_submitted(new_text: String):
 func on_hex_accepted():
 	var cam = GameManager.current_camera
 	if cam == 3:
-		await hacker_type("Код принят! Открываю прямой поток камеры #3...")
+		await hacker_type("Код принят! Открываю прямой поток камеры #4...")
 		if not is_inside_tree(): return
 		await hacker_type("Погоди. Это что... ТЫКВА?! Похищенная?!")
 		if not is_inside_tree(): return
