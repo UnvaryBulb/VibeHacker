@@ -13,12 +13,12 @@ var run_speed = 350
 var jump_force = -420
 var gravity = 1200
 var acceleration = 1500
-var friction = 2000
+var friction = 3000
 var air_acceleration = 800
 
 # === ДУГА ПРЫЖКА (асимметрия = ощущениe) ===
 var apex_gravity_mult = 0.55  # на вершине прыжка — "зависание"
-var fall_gravity_mult = 1.2   # вниз падаем резче — прыжок снаппи
+var fall_gravity_mult = 1.0   # вниз падаем резче — прыжок снаппи
 
 # === СОЧНЫЕ ФИЧИ ===
 var coyote_time = 0.1

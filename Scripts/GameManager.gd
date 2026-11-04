@@ -31,6 +31,7 @@ var cameras_data = {
 		"code_on_screen": "6924",
 		"hex_reward": "FF",
 		"platformer_scene": "res://Scenes/lvlA3.tscn",
+		"finale_image": "res://Assets/Sprites/cam4.png",
 		"rating_thresholds": {
 			"S": {"time": 30.0, "deaths": 0},   # < 2 мин, 0 смертей
 			"A": {"time": 40.0, "deaths": 4},   # < 4 мин, < 4 смертей

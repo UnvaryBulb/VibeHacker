@@ -74,7 +74,7 @@ func start_mission(camera_num: int):
 	if not is_inside_tree(): return
 	
 	# Скриншот тоже попадает в историю!
-	push('[img=400x225]' + data["screenshot"] + '[/img]\n')
+	push('[img=600x337]' + data["screenshot"] + '[/img]\n')
 	
 	await hacker_type("Введи код в терминал.")
 	if not is_inside_tree(): return
